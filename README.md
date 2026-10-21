@@ -1,0 +1,1 @@
+# gomi-rescue-quest2
