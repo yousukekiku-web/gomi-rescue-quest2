@@ -74,8 +74,9 @@ video{width:100%;height:100%;object-fit:cover;display:block;background:#000;}
 <body>
 <div id="stage">
 
+  <!-- 動画を差し替えたら ?v= の数字を変える（ブラウザ/GitHub Pagesのキャッシュで古い動画が再生されるのを防ぐ） -->
   <video id="opening-video" playsinline webkit-playsinline muted preload="auto">
-    <source src="assets/opening.mp4" type="video/mp4">
+    <source src="assets/opening.mp4?v=20261021" type="video/mp4" onerror="window.__srcFailed=true;if(window.__onSrcFail)window.__onSrcFail()">
   </video>
 
   <div class="sound-gate" id="sound-gate">
@@ -147,9 +148,17 @@ video.addEventListener('timeupdate', ()=>{
 video.addEventListener('ended', goNext);
 
 // safety net: if video fails to load at all, don't strand the user
-video.addEventListener('error', ()=>{
-  setTimeout(goNext, 800);
-});
+// ※<source>の読み込み失敗は<video>ではなく<source>側にerrorが飛ぶ。しかもスクリプトより先に
+//   起きることがあるため、<source>のonerror属性でフラグを立て、ここで拾う。
+// ※失敗時は「視聴済み」にしない（次回また動画を試せるよう、保存せず遷移だけ行う）
+let failed = false;
+function onVideoFail(){
+  if(failed) return; failed = true;
+  setTimeout(()=>{ location.href = NEXT_PAGE; }, 800);
+}
+window.__onSrcFail = onVideoFail;
+video.addEventListener('error', onVideoFail);
+if(window.__srcFailed) onVideoFail();
 </script>
 </body>
 </html>
