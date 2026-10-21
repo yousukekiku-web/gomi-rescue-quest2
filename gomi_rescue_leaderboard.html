@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, viewport-fit=cover">
+<title>ゴミレスキュークエスト｜みんなの活躍ランキング</title>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="167x167" href="apple-touch-icon-167x167.png">
+<link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon-120x120.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ゴミレスキュー">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Noto+Sans+JP:wght@400;700;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#ffb300; --purple:#7653c8; --purpled:#4a287d; --ink:#2a3a4a;
+  --blue:#2a72d4; --teal:#0f8f83; --green:#2ecc71;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'BIZ UDPGothic','Noto Sans JP',sans-serif;color:var(--ink);}
+body{background:linear-gradient(160deg,#173a34,#0f8f83);display:flex;align-items:center;justify-content:center;}
+
+#app{width:100%;max-width:460px;height:100%;max-height:900px;position:relative;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  background:#fff;box-shadow:0 10px 40px rgba(0,0,0,.3);}
+@media(min-width:521px){#app{border-radius:28px;height:92vh;}}
+/* 共有・プロジェクター表示などを想定し、少し広い画面でも見やすいように最大幅を広げられるようにしておく */
+@media(min-width:700px){#app{max-width:640px;}}
+
+.home-link{position:fixed;top:max(env(safe-area-inset-top),10px);left:12px;z-index:999;
+  width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.85);border:none;
+  font-size:17px;box-shadow:0 3px 10px rgba(0,0,0,.15);cursor:pointer;display:flex;
+  align-items:center;justify-content:center;text-decoration:none;color:inherit;}
+.home-link:active{transform:scale(.9);}
+.refresh-btn{position:fixed;top:max(env(safe-area-inset-top),10px);right:12px;z-index:999;
+  width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.85);border:none;
+  font-size:17px;box-shadow:0 3px 10px rgba(0,0,0,.15);cursor:pointer;display:flex;
+  align-items:center;justify-content:center;}
+.refresh-btn:active{transform:scale(.9) rotate(90deg);}
+.refresh-btn.spinning{animation:spin .6s linear;}
+@keyframes spin{from{transform:rotate(0);}to{transform:rotate(360deg);}}
+
+/* ===== hero ===== */
+.hero{background:linear-gradient(160deg,#173a34,#0f8f83);color:#fff;text-align:center;
+  padding:max(env(safe-area-inset-top),26px) 22px 20px;}
+.hero-emoji{font-size:40px;}
+.hero-title{font-family:'Fredoka One',sans-serif;font-size:19px;color:#c9ffb0;margin:4px 0 8px;
+  text-shadow:0 2px 0 rgba(0,0,0,.25);line-height:1.4;}
+.hero-copy{font-size:11.5px;font-weight:700;line-height:1.8;color:#e2fff0;max-width:380px;margin:0 auto;}
+
+/* ===== ranking list (大きめキャラクター表示) ===== */
+.board{padding:16px 16px 6px;display:flex;flex-direction:column;gap:12px;}
+.rank-card{background:#fff;border-radius:20px;padding:14px;box-shadow:0 4px 14px rgba(0,0,0,.1);
+  display:flex;flex-direction:column;gap:10px;border:2px solid transparent;cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.rank-card:active{transform:scale(.985);}
+.rank-card.top1{background:linear-gradient(160deg,#fff8e0,#ffe9b3);border-color:#ffcf4d;
+  box-shadow:0 0 0 2px #fff,0 0 0 4px #ffcf4d,0 8px 22px rgba(200,140,0,.3);}
+.rank-card.top2{background:linear-gradient(160deg,#f5f8fc,#e3edf7);border-color:#b9cfe6;}
+.rank-card.top3{background:linear-gradient(160deg,#fdf3ea,#f5dcc4);border-color:#e0b78a;}
+.rank-card.me{border-color:var(--green);box-shadow:0 0 0 2px #fff,0 0 0 4px var(--green),0 8px 22px rgba(30,150,80,.25);}
+
+.rc-top{display:flex;align-items:center;gap:12px;}
+.rc-pos{font-family:'Fredoka One',sans-serif;font-size:18px;width:30px;text-align:center;color:#9a86b8;flex-shrink:0;}
+.rc-pos.medal{font-size:26px;}
+.rc-char{width:64px;height:80px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-size:40px;background:#f6f0ff;border-radius:12px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(0,0,0,.05);}
+.rank-card.top1 .rc-char{width:76px;height:95px;font-size:46px;background:#fffdf6;}
+.rc-char img{width:100%;height:100%;object-fit:cover;display:block;}
+.rc-name{flex:1;min-width:0;}
+.rc-name .n{font-size:14.5px;font-weight:900;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rc-name .t{font-size:10.5px;font-weight:700;color:#8a86a8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;}
+.rc-score{font-family:'Fredoka One',sans-serif;font-size:13px;color:#3ab06a;letter-spacing:.03em;flex-shrink:0;text-align:right;}
+.rc-score small{display:block;font-family:'BIZ UDPGothic','Noto Sans JP',sans-serif;font-size:8.5px;color:#9aa7b0;font-weight:700;}
+
+.rc-locs{display:flex;flex-direction:column;gap:5px;padding-left:2px;}
+.rc-loc{display:flex;align-items:flex-start;gap:6px;background:#eafcf0;border-radius:10px;padding:6px 10px;
+  font-size:10.5px;font-weight:700;color:#1f7a45;line-height:1.5;}
+.rc-loc .num{flex-shrink:0;font-family:'Fredoka One',sans-serif;font-size:9.5px;background:#1f9c53;color:#fff;
+  border-radius:6px;padding:1px 6px;margin-top:1px;}
+.rc-empty{text-align:center;font-size:12px;color:#a89ac0;font-weight:700;padding:30px 20px;line-height:1.8;}
+
+.foot-row{padding:14px 18px 28px;display:flex;flex-direction:column;gap:10px;}
+.btn-join{width:100%;padding:14px;border:none;border-radius:40px;background:linear-gradient(135deg,#5edd7a,var(--green));
+  color:#fff;font-family:'Fredoka One',sans-serif;font-size:15px;cursor:pointer;box-shadow:0 5px 0 #1f9c53;
+  text-decoration:none;display:block;text-align:center;}
+.btn-join:active{transform:translateY(3px);box-shadow:0 2px 0 #1f9c53;}
+.btn-home-text{display:block;text-align:center;font-size:11px;font-weight:700;color:#9aa7b0;text-decoration:underline;}
+
+/* ===== ranking detail ===== */
+.detail-modal{position:fixed;inset:0;z-index:2000;display:flex;align-items:flex-end;justify-content:center;
+  background:rgba(20,30,40,.58);padding:18px 12px max(18px,env(safe-area-inset-bottom));}
+.detail-modal[hidden]{display:none;}
+.detail-sheet{width:min(100%,430px);max-height:calc(100dvh - 36px);overflow-y:auto;-webkit-overflow-scrolling:touch;
+  background:linear-gradient(160deg,#fff,#f6f0ff);border-radius:26px;padding:20px 18px 22px;position:relative;
+  box-shadow:0 18px 45px rgba(0,0,0,.35);text-align:center;animation:sheetIn .2s ease-out;}
+@keyframes sheetIn{from{transform:translateY(18px);opacity:0}to{transform:translateY(0);opacity:1}}
+.detail-close{position:absolute;right:12px;top:12px;width:38px;height:38px;border:0;border-radius:50%;background:#eee6fa;
+  color:#7653c8;font-size:22px;font-weight:900;cursor:pointer;}
+.detail-badge{display:inline-block;background:linear-gradient(135deg,#7653c8,#4a287d);color:#fff;border-radius:18px;
+  padding:4px 13px;font-size:10px;font-weight:900;letter-spacing:.08em;}
+.detail-char{width:184px;height:230px;margin:12px auto 10px;border-radius:20px;overflow:hidden;background:#f6f0ff;
+  display:flex;align-items:center;justify-content:center;font-size:96px;box-shadow:0 10px 22px rgba(60,30,110,.25);}
+.detail-char img{width:100%;height:100%;object-fit:cover;display:block;}
+.detail-name{font-family:'Fredoka One',sans-serif;font-size:24px;color:#4a287d;line-height:1.35;padding:0 32px;}
+.detail-tier{font-size:12px;font-weight:900;color:#8a86a8;margin-top:4px;}
+.detail-score{display:inline-block;margin-top:9px;background:#e2f9ec;color:#1f9c53;border-radius:12px;padding:5px 12px;font-family:'Fredoka One',sans-serif;font-size:13px;}
+.detail-locs{margin-top:18px;text-align:left;display:flex;flex-direction:column;gap:8px;}
+.detail-locs h3{font-family:'Fredoka One',sans-serif;color:#0f8f83;text-align:center;font-size:16px;margin-bottom:2px;}
+.detail-loc{display:flex;gap:9px;align-items:flex-start;background:#eafcf0;border-radius:12px;padding:10px;font-size:12px;font-weight:700;color:#1f7a45;line-height:1.55;}
+.detail-loc .num{flex-shrink:0;background:#1f9c53;color:#fff;border-radius:8px;padding:2px 7px;font-family:'Fredoka One',sans-serif;font-size:10px;}
+.detail-empty{font-size:12px;font-weight:700;color:#8a86a8;text-align:center;padding:14px;background:#f5f2f9;border-radius:12px;}
+</style>
+</head>
+<body>
+<div id="app">
+<a href="gomi_rescue_start.html" class="home-link" aria-label="ホームへ" title="ホームへ">🏠</a>
+<button class="refresh-btn" id="btn-refresh" aria-label="更新" title="更新">🔄</button>
+
+<div class="hero">
+  <div class="hero-emoji">🏅🔋</div>
+  <div class="hero-title">みんなの活躍ランキング</div>
+  <div class="hero-copy">レスキュー隊員たちが見つけた「リチウム電池回収スポット」の記録だよ。<br>大画面で映して、みんなでシェアしよう！</div>
+</div>
+
+<div class="board" id="board"><div class="rc-empty">読み込み中…</div></div>
+
+<div class="detail-modal" id="detail-modal" hidden aria-hidden="true">
+  <section class="detail-sheet" role="dialog" aria-modal="true" aria-labelledby="detail-name">
+    <button class="detail-close" id="detail-close" type="button" aria-label="閉じる">×</button>
+    <div id="detail-content"></div>
+  </section>
+</div>
+
+<div class="foot-row">
+  <a href="gomi_rescue_ranking.html" class="btn-join">✏️ 自分の記録を登録する</a>
+</div>
+
+</div>
+
+<script>
+const medals = ['🥇','🥈','🥉'];
+let displayedEntries = [];
+
+async function storageAvailable(){
+  return typeof window.storage !== 'undefined' && window.storage;
+}
+async function loadRanking(){
+  try{
+    if(await storageAvailable()){
+      const res = await window.storage.get('grq_ranking', true);
+      return res ? JSON.parse(res.value) : [];
+    }
+  }catch(e){}
+  try{ return JSON.parse(localStorage.getItem('grq_ranking_local') || '[]'); }
+  catch(e){ return []; }
+}
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function qs(name){
+  return new URLSearchParams(location.search).get(name);
+}
+
+async function renderBoard(){
+  const highlightTs = qs('ts') ? Number(qs('ts')) : null;
+  const list = await loadRanking();
+  list.sort((a,b)=>b.totalScore-a.totalScore);
+  const top = list.slice(0,20);
+  displayedEntries = top;
+  const boardEl = document.getElementById('board');
+
+  if(top.length===0){
+    boardEl.innerHTML = '<div class="rc-empty">まだ誰も登録していません。<br>最初のレスキュー隊員になろう！</div>';
+    return;
+  }
+
+  boardEl.innerHTML = top.map((e,i)=>{
+    const locs = (e.locations && e.locations.length) ? e.locations : [];
+    const topCls = i===0?' top1':(i===1?' top2':(i===2?' top3':''));
+    const meCls = (highlightTs && e.ts===highlightTs) ? ' me' : '';
+    const charFallback = `<span>${escapeHtml(e.tierEmoji||'🧑')}</span>`;
+    return `
+    <div class="rank-card${topCls}${meCls}" data-entry-index="${i}" role="button" tabindex="0" aria-label="${escapeHtml(e.name)}さんの詳細を見る">
+      <div class="rc-top">
+        <div class="rc-pos${i<3?' medal':''}">${i<3?medals[i]:(i+1)}</div>
+        <div class="rc-char" data-imgkey="${escapeHtml(e.imgKey||e.code||'')}">${charFallback}</div>
+        <div class="rc-name"><div class="n">${escapeHtml(e.name)}</div><div class="t">${escapeHtml(e.tier||'')}</div></div>
+        <div class="rc-score">${(e.totalScore||0).toLocaleString()}<small>SCORE</small></div>
+      </div>
+      ${locs.length ? `<div class="rc-locs">${locs.map((l,li)=>`
+        <div class="rc-loc"><span class="num">🔋回収${li+1}</span>${escapeHtml([l.prefecture,l.city].filter(Boolean).join(''))}${l.place?'・'+escapeHtml(l.place):''}</div>
+      `).join('')}</div>` : ''}
+    </div>`;
+  }).join('');
+
+  boardEl.querySelectorAll('.rc-char').forEach(el=>{
+    const key = el.getAttribute('data-imgkey');
+    if(!key) return;
+    const testImg = new Image();
+    testImg.onload = () => { el.innerHTML = `<img src="chars/${key}.png" alt="">`; };
+    testImg.src = `chars/${key}.png`;
+  });
+
+  if(highlightTs){
+    const meEl = boardEl.querySelector('.rank-card.me');
+    if(meEl) meEl.scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+renderBoard();
+
+function showDetail(entry){
+  const locs = Array.isArray(entry.locations) ? entry.locations.slice(0,3) : [];
+  const char = escapeHtml(entry.tierEmoji || '🧑');
+  const key = escapeHtml(entry.imgKey || entry.code || '');
+  const locHtml = locs.length ? locs.map((l,i)=>`
+    <div class="detail-loc"><span class="num">🔋 ${i+1}</span><span>${escapeHtml([l.prefecture,l.city].filter(Boolean).join(''))}${l.place?'・'+escapeHtml(l.place):''}</span></div>`).join('')
+    : '<div class="detail-empty">回収スポットは登録されていません。</div>';
+  document.getElementById('detail-content').innerHTML = `
+    <div class="detail-badge">RESCUE MEMBER</div>
+    <div class="detail-char" id="detail-char" data-imgkey="${key}">${char}</div>
+    <h2 class="detail-name" id="detail-name">${escapeHtml(entry.name)}</h2>
+    <div class="detail-tier">${escapeHtml(entry.tier || '')}</div>
+    <div class="detail-score">${Number(entry.totalScore || 0).toLocaleString()} SCORE</div>
+    <div class="detail-locs"><h3>🔍 調べたリサイクル回収スポット</h3>${locHtml}</div>`;
+  const charEl = document.getElementById('detail-char');
+  if(key){
+    const image = new Image();
+    image.onload = ()=>{ charEl.innerHTML = `<img src="chars/${key}.png" alt="">`; };
+    image.src = `chars/${key}.png`;
+  }
+  const modal = document.getElementById('detail-modal');
+  modal.hidden = false; modal.setAttribute('aria-hidden','false');
+}
+function closeDetail(){
+  const modal = document.getElementById('detail-modal');
+  modal.hidden = true; modal.setAttribute('aria-hidden','true');
+}
+document.getElementById('board').addEventListener('click', e=>{
+  const card = e.target.closest('.rank-card');
+  if(card) showDetail(displayedEntries[Number(card.dataset.entryIndex)]);
+});
+document.getElementById('board').addEventListener('keydown', e=>{
+  if((e.key==='Enter'||e.key===' ') && e.target.classList.contains('rank-card')){ e.preventDefault(); showDetail(displayedEntries[Number(e.target.dataset.entryIndex)]); }
+});
+document.getElementById('detail-close').addEventListener('click', closeDetail);
+document.getElementById('detail-modal').addEventListener('click', e=>{ if(e.target===e.currentTarget) closeDetail(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeDetail(); });
+
+document.getElementById('btn-refresh').addEventListener('click', (e)=>{
+  e.currentTarget.classList.remove('spinning');
+  void e.currentTarget.offsetWidth;
+  e.currentTarget.classList.add('spinning');
+  renderBoard();
+});
+</script>
+</body>
+</html>

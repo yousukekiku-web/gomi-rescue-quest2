@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, viewport-fit=cover">
+<title>ゴミレスキュークエスト｜回収場所をさがそう＆ランキング</title>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="167x167" href="apple-touch-icon-167x167.png">
+<link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon-120x120.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ゴミレスキュー">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Noto+Sans+JP:wght@400;700;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#ffb300; --purple:#7653c8; --purpled:#4a287d; --ink:#2a3a4a;
+  --blue:#2a72d4; --teal:#0f8f83; --green:#2ecc71;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'BIZ UDPGothic','Noto Sans JP',sans-serif;color:var(--ink);}
+body{background:linear-gradient(160deg,#173a34,#0f8f83);display:flex;align-items:center;justify-content:center;}
+
+#app{width:100%;max-width:460px;height:100%;max-height:900px;position:relative;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  background:#fff;box-shadow:0 10px 40px rgba(0,0,0,.3);}
+@media(min-width:521px){#app{border-radius:28px;height:92vh;}}
+
+.home-link{position:fixed;top:max(env(safe-area-inset-top),10px);left:12px;z-index:999;
+  width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.85);border:none;
+  font-size:17px;box-shadow:0 3px 10px rgba(0,0,0,.15);cursor:pointer;display:flex;
+  align-items:center;justify-content:center;text-decoration:none;color:inherit;}
+.home-link:active{transform:scale(.9);}
+
+/* ===== incomplete notice ===== */
+.notice{padding:40px 24px;text-align:center;}
+.notice .em{font-size:52px;margin-bottom:10px;}
+.notice h2{font-family:'Fredoka One',sans-serif;font-size:20px;color:var(--purpled);margin-bottom:10px;}
+.notice p{font-size:12.5px;font-weight:700;color:#5a5570;line-height:1.8;margin-bottom:20px;}
+.notice a{display:inline-block;background:linear-gradient(135deg,#8a64dd,var(--purple));color:#fff;
+  text-decoration:none;font-family:'Fredoka One',sans-serif;font-size:15px;padding:12px 30px;border-radius:40px;
+  box-shadow:0 5px 0 var(--purpled);}
+
+/* ===== hero ===== */
+.hero{background:linear-gradient(160deg,#173a34,#0f8f83);color:#fff;text-align:center;
+  padding:max(env(safe-area-inset-top),26px) 22px 22px;}
+.hero-emoji{font-size:42px;}
+.hero-title{font-family:'Fredoka One',sans-serif;font-size:19px;color:#c9ffb0;margin:4px 0 8px;
+  text-shadow:0 2px 0 rgba(0,0,0,.25);line-height:1.4;}
+.hero-copy{font-size:11.5px;font-weight:700;line-height:1.8;color:#e2fff0;max-width:360px;margin:0 auto;}
+
+/* ===== my character recap chip ===== */
+.me-chip{margin:14px 18px 0;display:flex;align-items:center;gap:10px;background:#f6f0ff;border-radius:16px;
+  padding:10px 14px;text-decoration:none;color:inherit;box-shadow:0 2px 8px rgba(60,30,110,.1);}
+.me-chip .mc-icon{width:42px;height:52px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:26px;
+  border-radius:9px;overflow:hidden;}
+.me-chip .mc-icon img{width:100%;height:100%;object-fit:cover;display:block;}
+.me-chip .mc-body{flex:1;min-width:0;}
+.me-chip .mc-label{font-size:9px;font-weight:900;color:#9a86b8;letter-spacing:.05em;}
+.me-chip .mc-title{font-size:12.5px;font-weight:900;color:var(--purpled);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.me-chip .mc-arrow{font-size:14px;color:#9a86b8;flex-shrink:0;}
+
+/* ===== register ===== */
+.register{margin:16px 18px;background:#f0faf3;border:2px dashed #a8e6b8;border-radius:16px;padding:16px;text-align:center;}
+.register h3{font-family:'Fredoka One',sans-serif;font-size:16px;color:#1f9c53;margin-bottom:8px;}
+.register p{font-size:11px;font-weight:700;color:#4a7a5a;margin-bottom:12px;line-height:1.6;}
+.register input{width:100%;padding:11px 14px;border-radius:12px;border:2px solid #b8e8c4;font-size:14px;
+  font-weight:700;margin-bottom:10px;text-align:center;background:#fff;color:var(--ink);}
+.register input:focus{outline:none;border-color:var(--green);}
+.jbrc-link{display:block;font-size:11px;font-weight:900;color:#0f8f6a;background:#e2f9ec;border:2px solid #b8e8c4;
+  border-radius:12px;padding:9px 10px;margin-bottom:10px;text-decoration:none;line-height:1.5;}
+.jbrc-link:active{transform:translateY(1px);}
+.loc-row{display:flex;gap:8px;margin-bottom:12px;}
+.loc-row select{flex:1;padding:11px 8px;border-radius:12px;border:2px solid #b8e8c4;font-size:12.5px;
+  font-weight:700;background:#fff;color:var(--ink);}
+.loc-row input{flex:1;margin-bottom:0;}
+.loc-row select:focus{outline:none;border-color:var(--green);}
+.loc-section-label{font-size:11px;font-weight:900;color:#4a7a5a;text-align:left;margin-bottom:8px;line-height:1.6;}
+.loc-block{background:#fff;border:2px solid #cdeed7;border-radius:14px;padding:12px;margin-bottom:10px;text-align:left;}
+.loc-block-num{display:inline-block;font-family:'Fredoka One',sans-serif;font-size:11px;color:#1f9c53;
+  background:#dff5e1;border-radius:8px;padding:2px 9px;margin-bottom:8px;}
+.loc-block .loc-row{margin-bottom:8px;}
+.loc-block input.place-input{margin-bottom:0;text-align:left;font-size:12.5px;}
+.loc-hint{font-size:9.5px;color:#6a9a7a;margin:-2px 0 12px;line-height:1.6;text-align:left;}
+.btn-register{width:100%;padding:13px;border:none;border-radius:40px;background:linear-gradient(135deg,#5edd7a,var(--green));
+  color:#fff;font-family:'Fredoka One',sans-serif;font-size:16px;cursor:pointer;box-shadow:0 5px 0 #1f9c53;}
+.btn-register:active{transform:translateY(3px);box-shadow:0 2px 0 #1f9c53;}
+.btn-register:disabled{opacity:.5;}
+.reg-note{font-size:9.5px;color:#6a9a7a;margin-top:8px;line-height:1.6;}
+
+/* ===== ranking ===== */
+.ranking{margin:18px 18px 8px;}
+.ranking-title{font-family:'Fredoka One',sans-serif;font-size:17px;color:var(--purpled);text-align:center;margin-bottom:10px;}
+.rank-list{display:flex;flex-direction:column;gap:7px;}
+.rank-item{display:flex;flex-direction:column;gap:6px;background:#fff;border-radius:12px;padding:10px 12px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);}
+.rank-item.me{background:#eafcf0;border:2px solid var(--green);}
+.rank-top{display:flex;align-items:center;gap:10px;}
+.rank-pos{font-family:'Fredoka One',sans-serif;font-size:15px;width:26px;text-align:center;color:#9a86b8;flex-shrink:0;}
+.rank-pos.medal{font-size:19px;}
+.rank-char-icon{width:34px;height:42px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px;
+  border-radius:8px;overflow:hidden;}
+.rank-char-icon img{width:100%;height:100%;object-fit:cover;display:block;}
+.rank-name{flex:1;min-width:0;}
+.rank-name .n{font-size:12.5px;font-weight:900;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rank-name .t{font-size:9.5px;font-weight:700;color:#8a86a8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rank-score{font-family:'Fredoka One',sans-serif;font-size:11px;color:#3ab06a;letter-spacing:.05em;flex-shrink:0;}
+.rank-chars{display:flex;gap:5px;flex-wrap:wrap;padding-left:44px;}
+.rank-char-badge{display:flex;align-items:center;gap:3px;background:#e2f9ec;border-radius:8px;padding:3px 7px;
+  font-size:9.5px;font-weight:700;color:#1f9c53;}
+.rank-empty{text-align:center;font-size:11.5px;color:#a89ac0;font-weight:700;padding:16px;}
+
+.btn-view-board{display:block;text-align:center;background:linear-gradient(135deg,#ffcf4d,var(--gold));
+  color:#5a3a00;text-decoration:none;font-family:'Fredoka One',sans-serif;font-size:14.5px;line-height:1.5;
+  padding:15px 16px;border-radius:18px;box-shadow:0 5px 0 #c98700;}
+.btn-view-board:active{transform:translateY(3px);box-shadow:0 2px 0 #c98700;}
+.btn-view-board small{display:block;font-family:'BIZ UDPGothic','Noto Sans JP',sans-serif;font-size:10.5px;
+  font-weight:700;margin-top:4px;opacity:.85;}
+
+.retry-row{padding:16px 18px 30px;display:flex;flex-direction:column;gap:10px;}
+.btn-retry-all{width:100%;padding:14px;border:none;border-radius:40px;background:linear-gradient(135deg,#8a64dd,var(--purple));
+  color:#fff;font-family:'Fredoka One',sans-serif;font-size:15px;cursor:pointer;box-shadow:0 5px 0 var(--purpled);}
+.btn-retry-all:active{transform:translateY(3px);box-shadow:0 2px 0 var(--purpled);}
+</style>
+</head>
+<body>
+<div id="app">
+<a href="gomi_rescue_start.html" class="home-link" aria-label="ホームへ" title="ホームへ">🏠</a>
+
+<div id="content"></div>
+
+</div>
+
+<script>
+// ════════════════════════════════════════════════
+// データテーブル（gomi_rescue_result.html と同じロジックを使い、
+// 保存済みのガチャ抽選結果（grq_char_roll）をそのまま再利用する）
+// ════════════════════════════════════════════════
+const RANK_VAL = {S:4, A:3, B:2, C:1};
+
+const TIER_META = [
+  {title:'ただの一般人'},
+  {title:'見習いレスキュー隊員'},
+  {title:'半人前クリーナー'},
+  {title:'頼れる清掃レンジャー'},
+  {title:'エリート・ゴミレスキュー隊員'},
+  {title:'完全なる掃除人'}
+];
+function tierIndexFromSum(sum){
+  if(sum<=3) return 0;
+  if(sum<=5) return 1;
+  if(sum<=7) return 2;
+  if(sum<=9) return 3;
+  if(sum<=11) return 4;
+  return 5;
+}
+
+const TIER_VARIANTS = [
+  [
+    {id:'t0_boy', emoji:'🧒', name:'ぼーっとした少年'},
+    {id:'t0_girl', emoji:'👧', name:'まだ自信のない少女'},
+    {id:'t0_man', emoji:'🧑', name:'寝ぼけまなこの青年'},
+    {id:'t0_woman', emoji:'👩', name:'ちょっぴり忙しい女性'},
+    {id:'t0_tanuki', emoji:'🦝', name:'まよいこんだ子だぬき'}
+  ],
+  [
+    {id:'t1_boy', emoji:'🧑‍🚒', name:'元気いっぱいの少年隊員'},
+    {id:'t1_girl', emoji:'👧', name:'はりきり少女隊員'},
+    {id:'t1_man', emoji:'👨‍🚒', name:'新人青年レスキュー'},
+    {id:'t1_woman', emoji:'👩‍🚒', name:'新人女性レスキュー'},
+    {id:'t1_neko', emoji:'🐈', name:'おっちょこちょいの野良ねこ隊員'}
+  ],
+  [
+    {id:'t2_boy', emoji:'🧑‍🔧', name:'成長中の少年クリーナー'},
+    {id:'t2_girl', emoji:'👧', name:'負けん気の少女クリーナー'},
+    {id:'t2_man', emoji:'🧔', name:'ベテラン見習いの男性'},
+    {id:'t2_woman', emoji:'👩‍🔧', name:'てきぱき女性クリーナー'},
+    {id:'t2_karasu', emoji:'🐦‍⬛', name:'がんばりやのカラス隊員'}
+  ],
+  [
+    {id:'t3_man', emoji:'🦸‍♂️', name:'頼れる青年レンジャー'},
+    {id:'t3_woman', emoji:'🦸‍♀️', name:'頼れる女性レンジャー'},
+    {id:'t3_ojisan', emoji:'👨‍🦳', name:'貫禄のあるおじさんレンジャー'},
+    {id:'t3_obasan', emoji:'👩‍🦳', name:'貫禄のあるおばさんレンジャー'},
+    {id:'t3_kitsune', emoji:'🦊', name:'森からきたキツネレンジャー'}
+  ],
+  [
+    {id:'t4_man', emoji:'🕴️', name:'エリート青年隊員'},
+    {id:'t4_woman', emoji:'👩‍💼', name:'エリート女性隊員'},
+    {id:'t4_grandpa', emoji:'👴', name:'熟練のおじいちゃん隊員'},
+    {id:'t4_grandma', emoji:'👵', name:'熟練のおばあちゃん隊員'},
+    {id:'t4_wolf', emoji:'🐺', name:'伝説と噂されるオオカミ隊員'}
+  ],
+  [
+    {id:'t5_boy', emoji:'🧑‍🎓', name:'完全なる掃除・少年天才'},
+    {id:'t5_girl', emoji:'👧', name:'完全なる掃除・少女天才'},
+    {id:'t5_man', emoji:'🦹‍♂️', name:'完全なる掃除人（青年）'},
+    {id:'t5_woman', emoji:'🦹‍♀️', name:'完全なる掃除人（女性）'},
+    {id:'t5_elder', emoji:'🧙', name:'伝説の長老掃除人'}
+  ]
+];
+function pickRandom(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
+
+const RARE_CHARACTERS = [
+  {id:'rare1', emoji:'🔥🌿', title:'不死鳥アッシュフェニックス'},
+  {id:'rare2', emoji:'⚖️✨', title:'選別の神ワケルシン'},
+  {id:'rare3', emoji:'👑🏙️', title:'クリーン・エンペラー'}
+];
+
+// gomi_rescue_result.html と同じ抽選ロジック。同じ実績（フィンガープリント）なら
+// localStorage（grq_char_roll）に保存済みの結果をそのまま使い、無ければここで新規抽選する。
+function rollCharacterVariant(tierIndex, fingerprint){
+  try{
+    const saved = JSON.parse(localStorage.getItem('grq_char_roll') || 'null');
+    if(saved && saved.fp === fingerprint) return saved;
+  }catch(e){}
+  let variantId = null, rareId = null;
+  if(tierIndex === 5){
+    const roll = Math.floor(Math.random()*30);
+    if(roll < 3){ rareId = RARE_CHARACTERS[roll].id; }
+    else{ variantId = pickRandom(TIER_VARIANTS[5]).id; }
+  } else {
+    variantId = pickRandom(TIER_VARIANTS[tierIndex]).id;
+  }
+  const result = {fp: fingerprint, tierIndex, variantId, rareId};
+  try{ localStorage.setItem('grq_char_roll', JSON.stringify(result)); }catch(e){}
+  return result;
+}
+
+// ════════════════════════════════════════════════
+// 都道府県リスト
+// ════════════════════════════════════════════════
+const PREFECTURES = ['北海道','青森県','岩手県','宮城県','秋田県','山形県','福島県','茨城県','栃木県','群馬県',
+  '埼玉県','千葉県','東京都','神奈川県','新潟県','富山県','石川県','福井県','山梨県','長野県',
+  '岐阜県','静岡県','愛知県','三重県','滋賀県','京都府','大阪府','兵庫県','奈良県','和歌山県',
+  '鳥取県','島根県','岡山県','広島県','山口県','徳島県','香川県','愛媛県','高知県','福岡県',
+  '佐賀県','長崎県','熊本県','大分県','宮崎県','鹿児島県','沖縄県'];
+
+function loadProgress(){
+  try{ return JSON.parse(localStorage.getItem('grq_progress') || '{}'); }
+  catch(e){ return {}; }
+}
+
+// ════════════════════════════════════════════════
+// 共有ランキング保存（Artifact上ならwindow.storageで全員共有、
+// それ以外の環境ではブラウザ内ローカル保存にフォールバック）
+//
+// ★Supabase移行メモ：将来的にここをSupabaseに差し替える場合は、
+//   loadRanking() → supabase.from('grq_ranking').select('*').order('totalScore',{ascending:false})
+//   saveRanking(list) → 呼び出し側をinsert 1件（例：supabase.from('grq_ranking').insert(entry)）に変更する形が自然です。
+//   現状はリスト全体を読み書きする簡易実装なので、移行時はentry単位のinsert関数に置き換えてください。
+// ════════════════════════════════════════════════
+async function storageAvailable(){
+  return typeof window.storage !== 'undefined' && window.storage;
+}
+async function loadRanking(){
+  try{
+    if(await storageAvailable()){
+      const res = await window.storage.get('grq_ranking', true);
+      return res ? JSON.parse(res.value) : [];
+    }
+  }catch(e){}
+  try{ return JSON.parse(localStorage.getItem('grq_ranking_local') || '[]'); }
+  catch(e){ return []; }
+}
+async function saveRanking(list){
+  try{
+    if(await storageAvailable()){
+      await window.storage.set('grq_ranking', JSON.stringify(list), true);
+      return;
+    }
+  }catch(e){}
+  try{ localStorage.setItem('grq_ranking_local', JSON.stringify(list)); }catch(e){}
+}
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// ════════════════════════════════════════════════
+// 描画
+// ════════════════════════════════════════════════
+async function main(){
+  const p = loadProgress();
+  const s1 = p.stage1, s2 = p.stage2, s3 = p.stage3;
+  const content = document.getElementById('content');
+
+  if(!s1 || !s2 || !s3){
+    content.innerHTML = `
+      <div class="notice">
+        <div class="em">🔒</div>
+        <h2>まだ登録できません</h2>
+        <p>3つのステージすべてをクリアすると、<br>ランキング登録のページが開きます。</p>
+        <a href="gomi_rescue_start.html">ホームへ戻る</a>
+      </div>`;
+    return;
+  }
+
+  const code = s1.rank4 + s2.rank4 + s3.rank4;
+  const sum = RANK_VAL[s1.rank4] + RANK_VAL[s2.rank4] + RANK_VAL[s3.rank4];
+  const tierIndex = tierIndexFromSum(sum);
+  const tierTitle = TIER_META[tierIndex].title;
+  const totalScore = sum*1000 + (s1.score||0) + (s2.found||0)*50 + (s3.correct||0)*50;
+
+  const fingerprint = [s1.ts, s2.ts, s3.ts].join('|');
+  const roll = rollCharacterVariant(tierIndex, fingerprint);
+  const rare = roll.rareId ? RARE_CHARACTERS.find(r=>r.id===roll.rareId) : null;
+  const variant = (!rare) ? (TIER_VARIANTS[tierIndex].find(v=>v.id===roll.variantId) || TIER_VARIANTS[tierIndex][0]) : null;
+
+  const cardEmoji = rare ? rare.emoji : variant.emoji;
+  const cardTitle = rare ? rare.title : `${variant.name}｜${tierTitle}`;
+  const imgKey = rare ? `rare_${rare.id}` : variant.id;
+
+  content.innerHTML = `
+    <div class="hero">
+      <div class="hero-emoji">🔋🗺️</div>
+      <div class="hero-title">自分の街のリチウム電池の<br>回収場所を探そう！</div>
+      <div class="hero-copy">ゲームはここまで。ここから先は、キミの街でほんとうに探す番だ。<br>近くの回収協力店を見つけて登録すれば、キミの冒険が現実の街にもつながる。</div>
+    </div>
+
+    <a href="gomi_rescue_result.html" class="me-chip">
+      <div class="mc-icon" id="me-chip-icon"><span>${cardEmoji}</span></div>
+      <div class="mc-body">
+        <div class="mc-label">キミのガチャ結果</div>
+        <div class="mc-title">${cardTitle}</div>
+      </div>
+      <div class="mc-arrow">結果を見る ▶</div>
+    </a>
+
+    <div class="register">
+      <h3>🏆 ランキングに登録しよう</h3>
+      <p>名前と、キミが調べた「回収場所」を登録しよう！<br>自分の住む地域だけでなく、他の場所を調べて登録してもOK。</p>
+
+      <input type="text" id="reg-name" maxlength="12" placeholder="なまえ（12文字まで）">
+
+      <a href="https://www.jbrc-system.com/page/pc/techc010/" target="_blank" rel="noopener" class="jbrc-link">
+        📍 JBRC協力店検索で回収場所を調べる（別タブで開きます）
+      </a>
+
+      <div class="loc-section-label">見つけた「リチウム電池回収スポット」を登録しよう（①は必須・最大3件）</div>
+      ${[1,2,3].map(n=>`
+      <div class="loc-block">
+        <span class="loc-block-num">🔋 回収スポット${n}${n===1?'（必須）':'（任意）'}</span>
+        <div class="loc-row">
+          <select id="reg-pref-${n}">
+            <option value="">都道府県</option>
+            ${PREFECTURES.map(pr=>`<option value="${pr}">${pr}</option>`).join('')}
+          </select>
+          <input type="text" id="reg-city-${n}" maxlength="20" placeholder="〜市／〜区など">
+        </div>
+        <input type="text" class="place-input" id="reg-place-${n}" maxlength="30" placeholder="お店・回収場所の名前（例：〇〇店）">
+      </div>`).join('')}
+      <div class="loc-hint">※ JBRCのポップアップに出てくる店名・住所を見て入力してみよう。</div>
+
+      <button class="btn-register" id="btn-register">ランキングに登録する</button>
+      <div class="reg-note" id="reg-note"></div>
+    </div>
+
+    <div class="ranking">
+      <div class="ranking-title">🏅 みんなのランキング</div>
+      <a href="gomi_rescue_leaderboard.html" class="btn-view-board">
+        🔋 リチウム電池回収スポット・ランキングを見る
+        <small>登録したキミの記録も、大きなキャラクターで確認できます</small>
+      </a>
+    </div>
+
+    <div class="retry-row">
+      <button class="btn-retry-all" id="btn-restart">🔄 最初から挑戦する</button>
+    </div>
+  `;
+
+  // 自分のキャラクターアイコン（画像があれば大きめの絵文字の代わりに表示）
+  (function loadMeChipIcon(){
+    const testImg = new Image();
+    testImg.onload = () => {
+      const el = document.getElementById('me-chip-icon');
+      if(el) el.innerHTML = `<img src="chars/${imgKey}.png" alt="">`;
+    };
+    testImg.src = `chars/${imgKey}.png`;
+  })();
+
+  const medals = ['🥇','🥈','🥉'];
+
+  document.getElementById('btn-register').addEventListener('click', async ()=>{
+    const nameInput = document.getElementById('reg-name');
+    const note = document.getElementById('reg-note');
+    const name = nameInput.value.trim();
+
+    const blocks = [1,2,3].map(n=>({
+      prefecture: document.getElementById('reg-pref-'+n).value,
+      city: document.getElementById('reg-city-'+n).value.trim(),
+      place: document.getElementById('reg-place-'+n).value.trim()
+    }));
+
+    if(!name){ note.textContent='なまえを入力してね！'; note.style.color='#ff5a4d'; return; }
+    if(!blocks[0].prefecture || !blocks[0].city){
+      note.textContent='①の都道府県と市区町村は必須だよ！（JBRC協力店検索で調べてみよう）';
+      note.style.color='#ff5a4d'; return;
+    }
+    for(let i=1;i<3;i++){
+      const b = blocks[i];
+      const hasAny = b.prefecture || b.city || b.place;
+      if(hasAny && (!b.prefecture || !b.city)){
+        note.textContent=`${i+1}番目は都道府県と市区町村の両方を入力してね（お店の名前は任意）`;
+        note.style.color='#ff5a4d'; return;
+      }
+    }
+    const locations = blocks.filter(b=>b.prefecture && b.city).slice(0,3);
+
+    const btn = document.getElementById('btn-register');
+    btn.disabled = true; btn.textContent = '登録中…';
+    const entry = {
+      name: name.slice(0,12),
+      code: code,
+      tier: cardTitle,
+      tierEmoji: cardEmoji,
+      imgKey: imgKey,
+      rare: !!rare,
+      locations: locations.map(l=>({prefecture:l.prefecture, city:l.city.slice(0,20), place:l.place.slice(0,30)})),
+      totalScore: totalScore,
+      ts: Date.now()
+    };
+    const list = await loadRanking();
+    list.push(entry);
+    await saveRanking(list);
+    note.textContent = '登録しました！ランキングページへ移動します…';
+    note.style.color = '#1f9c53';
+    setTimeout(()=>{ location.href = 'gomi_rescue_leaderboard.html?ts='+entry.ts; }, 700);
+  });
+
+  document.getElementById('btn-restart').addEventListener('click', ()=>{
+    if(confirm('進行状況をリセットして最初から挑戦します。よろしいですか？')){
+      try{ localStorage.removeItem('grq_progress'); }catch(e){}
+      location.href = 'gomi_rescue_start.html';
+    }
+  });
+}
+main();
+</script>
+</body>
+</html>

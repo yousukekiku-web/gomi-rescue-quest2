@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, viewport-fit=cover">
+<title>ゴミレスキュークエスト｜オープニング</title>
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="167x167" href="apple-touch-icon-167x167.png">
+<link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon-120x120.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ゴミレスキュー">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Noto+Sans+JP:wght@400;700;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#ffb300; --purple:#7653c8; --purpled:#4a287d; --ink:#2a3a4a;
+  --blue:#2a72d4; --teal:#0f8f83; --green:#2ecc71;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'BIZ UDPGothic','Noto Sans JP',sans-serif;color:var(--ink);
+  background:#000;}
+body{display:flex;align-items:center;justify-content:center;}
+
+#stage{width:100%;max-width:460px;height:100%;max-height:900px;position:relative;overflow:hidden;
+  background:#000;box-shadow:0 10px 40px rgba(0,0,0,.5);}
+@media(min-width:521px){#stage{border-radius:28px;height:92vh;}}
+
+video{width:100%;height:100%;object-fit:cover;display:block;background:#000;}
+
+/* ===== overlay controls ===== */
+.top-row{position:absolute;top:max(env(safe-area-inset-top),14px);left:0;right:0;
+  display:flex;justify-content:flex-end;padding:0 14px;z-index:20;}
+.skip-btn{background:rgba(0,0,0,.45);color:#fff;border:1.5px solid rgba(255,255,255,.6);
+  border-radius:40px;padding:8px 16px;font-family:'BIZ UDPGothic','Noto Sans JP',sans-serif;
+  font-size:12.5px;font-weight:700;cursor:pointer;letter-spacing:.03em;
+  display:flex;align-items:center;gap:5px;backdrop-filter:blur(4px);}
+.skip-btn:active{transform:scale(.95);}
+
+/* tap-to-start sound overlay (needed for autoplay-with-audio on iOS/Chrome) */
+.sound-gate{position:absolute;inset:0;z-index:30;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:18px;background:radial-gradient(circle at 50% 40%,#173a34,#0b201c 75%);
+  color:#fff;text-align:center;padding:0 30px;}
+.sound-gate.hidden{display:none;}
+.sg-emoji{font-size:56px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.4));}
+.sg-title{font-family:'Fredoka One',sans-serif;font-size:20px;color:#c9ffb0;line-height:1.5;
+  text-shadow:0 2px 0 rgba(0,0,0,.3);}
+.sg-sub{font-size:12px;font-weight:700;color:#dff7ea;opacity:.85;line-height:1.8;}
+.sg-btn{margin-top:6px;background:linear-gradient(135deg,#5edd7a,var(--green));color:#fff;
+  border:none;border-radius:40px;padding:15px 38px;font-family:'Fredoka One',sans-serif;
+  font-size:16px;cursor:pointer;box-shadow:0 5px 0 #1f9c53;}
+.sg-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #1f9c53;}
+.sg-skip{margin-top:14px;background:transparent;color:#dff7ea;border:none;
+  font-family:'BIZ UDPGothic','Noto Sans JP',sans-serif;font-size:12.5px;font-weight:700;
+  text-decoration:underline;opacity:.8;cursor:pointer;padding:6px 10px;}
+.sg-skip:active{opacity:.5;}
+
+/* progress bar along the bottom */
+.progress-wrap{position:absolute;left:14px;right:14px;bottom:max(env(safe-area-inset-bottom),16px);
+  z-index:20;height:4px;border-radius:4px;background:rgba(255,255,255,.25);overflow:hidden;}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,#5edd7a,var(--green));
+  border-radius:4px;transition:width .1s linear;}
+
+/* fade-to-white transition before moving to the start page */
+.fade-out{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:40;
+  transition:opacity .6s ease;}
+.fade-out.active{opacity:1;}
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <video id="opening-video" playsinline webkit-playsinline muted preload="auto">
+    <source src="assets/opening.mp4" type="video/mp4">
+  </video>
+
+  <div class="sound-gate" id="sound-gate">
+    <div class="sg-emoji">🔋🌍</div>
+    <div class="sg-title">ゴミレスキュー<br>クエスト</div>
+    <div class="sg-sub">音を鳴らして<br>物語をはじめよう</div>
+    <button class="sg-btn" id="btn-start-sound">▶ はじめる</button>
+    <button class="sg-skip" id="btn-skip-gate">スキップする ▶</button>
+  </div>
+
+  <div class="top-row">
+    <button class="skip-btn" id="btn-skip">スキップ ▶</button>
+  </div>
+
+  <div class="progress-wrap"><div class="progress-bar" id="progress-bar"></div></div>
+
+  <div class="fade-out" id="fade-out"></div>
+
+</div>
+
+<script>
+const video = document.getElementById('opening-video');
+const gate = document.getElementById('sound-gate');
+const btnStart = document.getElementById('btn-start-sound');
+const btnSkip = document.getElementById('btn-skip');
+const progressBar = document.getElementById('progress-bar');
+const fadeOut = document.getElementById('fade-out');
+
+const NEXT_PAGE = 'gomi_rescue_start.html';
+const SEEN_KEY = 'grq_opening_seen';
+
+// 2回目以降の訪問は、オープニング動画を出さずにすぐスタート画面へ
+try{
+  if(localStorage.getItem(SEEN_KEY) === 'true'){
+    location.replace(NEXT_PAGE);
+  }
+}catch(e){ /* localStorageが使えない環境ではそのままオープニングを表示 */ }
+
+function markSeen(){
+  try{ localStorage.setItem(SEEN_KEY, 'true'); }catch(e){}
+}
+
+function goNext(){
+  markSeen();
+  fadeOut.classList.add('active');
+  setTimeout(()=>{ location.href = NEXT_PAGE; }, 550);
+  // 万が一フェード演出だけで遷移が起きなかった場合の保険
+  setTimeout(()=>{ location.href = NEXT_PAGE; }, 2000);
+}
+
+// try silent autoplay immediately so something is moving behind the gate
+video.play().catch(()=>{});
+
+btnStart.addEventListener('click', ()=>{
+  gate.classList.add('hidden');
+  video.muted = false;
+  video.currentTime = 0;
+  video.play().catch(()=>{ video.muted = true; video.play().catch(()=>{}); });
+});
+
+btnSkip.addEventListener('click', goNext);
+document.getElementById('btn-skip-gate').addEventListener('click', goNext);
+
+video.addEventListener('timeupdate', ()=>{
+  if(!video.duration) return;
+  progressBar.style.width = (video.currentTime / video.duration * 100) + '%';
+});
+
+video.addEventListener('ended', goNext);
+
+// safety net: if video fails to load at all, don't strand the user
+video.addEventListener('error', ()=>{
+  setTimeout(goNext, 800);
+});
+</script>
+</body>
+</html>

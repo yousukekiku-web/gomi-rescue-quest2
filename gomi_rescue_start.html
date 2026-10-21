@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, viewport-fit=cover">
+<title>ゴミレスキュークエスト</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Noto+Sans+JP:wght@400;700;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#bfe8f5; --skydeep:#8fd0ea;
+  --blue:#2a72d4; --blued:#0f4f9c;
+  --teal:#0f8f83; --tealdeep:#0a6b62;
+  --purple:#7653c8; --purpled:#4a287d;
+  --gold:#ffb300; --green:#2ecc71; --ink:#2a3a4a;
+  --gray:#9aa7b0;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'BIZ UDPGothic','Noto Sans JP',sans-serif;color:var(--ink);}
+body{background:linear-gradient(180deg,var(--sky),var(--skydeep));display:flex;align-items:center;justify-content:center;}
+
+#app{width:100%;max-width:460px;height:100%;max-height:900px;position:relative;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  background:#fff;box-shadow:0 10px 40px rgba(0,0,0,.25);}
+@media(min-width:521px){#app{border-radius:28px;height:92vh;}}
+
+.hero{background:linear-gradient(180deg,var(--sky),var(--skydeep));text-align:center;
+  padding:max(env(safe-area-inset-top),22px) 20px 20px;}
+.truck{font-size:clamp(46px,13vw,64px);animation:bob 2.4s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+.g-title{font-family:'Fredoka One',sans-serif;font-size:clamp(26px,7.5vw,36px);color:var(--blue);
+  text-shadow:2px 2px 0 #fff,4px 4px 0 rgba(0,60,120,.12);margin-top:2px;}
+.g-sub{font-size:12px;font-weight:900;color:#1a5fa0;letter-spacing:.12em;margin-top:2px;}
+
+.story{margin:14px 18px 0;background:#fff8e8;border:2px dashed #f0d189;border-radius:16px;padding:14px 16px;
+  font-size:12.5px;line-height:1.85;font-weight:700;color:#6a5320;text-align:left;}
+.story b{color:#c2740a;}
+
+.city-wrap{margin:16px 18px 4px;background:#eef7ff;border-radius:16px;padding:14px 16px;box-shadow:inset 0 1px 4px rgba(0,0,0,.06);}
+.city-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.city-label{font-size:11.5px;font-weight:900;color:#3378b8;letter-spacing:.05em;}
+.city-pct{font-family:'Fredoka One',sans-serif;font-size:16px;color:#1a3a5a;}
+.city-bar{height:14px;background:#dbeaf5;border-radius:7px;overflow:hidden;box-shadow:inset 0 1px 3px rgba(0,0,0,.12);}
+.city-bar-fill{height:100%;border-radius:7px;background:linear-gradient(90deg,#ffb14d,#2ecc71);transition:width .5s ease;}
+.city-scene{text-align:center;font-size:26px;margin-top:8px;letter-spacing:2px;}
+
+.stages{padding:16px 18px 8px;display:flex;flex-direction:column;gap:12px;}
+.stage-card{display:flex;align-items:center;gap:12px;border-radius:18px;padding:12px 14px;
+  box-shadow:0 4px 14px rgba(0,0,0,.1);text-decoration:none;color:inherit;position:relative;overflow:hidden;}
+.stage-card.locked{opacity:.55;filter:grayscale(.5);pointer-events:none;}
+.sc-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;
+  font-size:26px;flex-shrink:0;box-shadow:0 3px 8px rgba(0,0,0,.15);color:#fff;}
+.sc1{background:#fff5f0;} .sc1 .sc-icon{background:linear-gradient(135deg,#5a9cf0,var(--blue));}
+.sc2{background:#fff8ec;} .sc2 .sc-icon{background:linear-gradient(135deg,#17ab9d,var(--teal));}
+.sc3{background:#f6f0ff;} .sc3 .sc-icon{background:linear-gradient(135deg,#8a64dd,var(--purple));}
+.sc-body{flex:1;min-width:0;}
+.sc-title{font-family:'Fredoka One',sans-serif;font-size:15px;color:var(--ink);}
+.sc-desc{font-size:10.5px;font-weight:700;color:#6a7a88;margin-top:1px;}
+.sc-status{font-size:10px;font-weight:900;margin-top:4px;}
+.sc-status.clear{color:#1f9c53;}
+.sc-status.locked-lb{color:#9aa7b0;}
+.sc-rank{font-family:'Fredoka One',sans-serif;font-size:22px;width:38px;text-align:center;flex-shrink:0;}
+.lock-emoji{font-size:20px;flex-shrink:0;}
+
+.result-card{margin:4px 18px 18px;display:flex;align-items:center;gap:12px;border-radius:18px;padding:14px;
+  background:linear-gradient(135deg,#2a2140,#4a3672);color:#fff;text-decoration:none;box-shadow:0 6px 18px rgba(40,20,70,.35);}
+.result-card.locked{opacity:.5;filter:grayscale(.6);pointer-events:none;}
+.result-card .sc-icon{background:linear-gradient(135deg,var(--gold),#ff8a00);}
+.result-card .sc-title{color:#fff;}
+.result-card .sc-desc{color:#d8cdf0;}
+
+.foot-row{padding:4px 18px 26px;text-align:center;}
+.btn-reset{background:none;border:none;font-size:11px;color:#9aa7b0;font-weight:700;text-decoration:underline;cursor:pointer;padding:8px;}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <div class="hero">
+    <div class="truck">🚛</div>
+    <div class="g-title">ゴミレスキュークエスト</div>
+    <div class="g-sub">GOMI RESCUE QUEST</div>
+  </div>
+
+  <div class="story" id="story-text"></div>
+
+  <div class="city-wrap">
+    <div class="city-row">
+      <span class="city-label">🏙️ 街のクリーンさ</span>
+      <span class="city-pct" id="city-pct">0%</span>
+    </div>
+    <div class="city-bar"><div class="city-bar-fill" id="city-bar-fill" style="width:0%;"></div></div>
+    <div class="city-scene" id="city-scene">🏚️💨🗑️🗑️🗑️</div>
+  </div>
+
+  <div class="stages" id="stages"></div>
+
+  <a href="gomi_rescue_result.html" class="result-card locked" id="result-card">
+    <div class="sc-icon">🏆</div>
+    <div class="sc-body">
+      <div class="sc-title">最終結果 &amp; ランキング</div>
+      <div class="sc-desc" id="result-desc">3ステージすべてクリアすると解放されます</div>
+    </div>
+    <span class="lock-emoji" id="result-lock">🔒</span>
+  </a>
+
+  <div class="foot-row"><button class="btn-reset" id="btn-reset">進行状況をリセットする</button></div>
+
+</div>
+
+<script>
+const STORY_DEFAULT = 'ここ数年、街には危険なゴミがどんどん増えてきた……分別ミスによる収集車の発火事故、街のあちこちに散らばる放置ごみ。このままでは街はゴミに埋もれてしまう。<br><br><b>頼れるレスキュー隊員はキミしかいない。</b><br>3つのステージを乗りこえて、街を守ろう！';
+
+function loadProgress(){
+  try{ return JSON.parse(localStorage.getItem('grq_progress') || '{}'); }
+  catch(e){ return {}; }
+}
+
+const STAGES = [
+  {num:1, cls:'sc1', icon:'🚛', title:'ステージ1', desc:'仕分けクイズ循環型ゲーム', href:'gomi_rescue_stage1.html'},
+  {num:2, cls:'sc2', icon:'🔍', title:'ステージ2', desc:'4大危険物さがし', href:'gomi_rescue_stage2.html'},
+  {num:3, cls:'sc3', icon:'🧠', title:'ステージ3', desc:'ひらめき安全クイズ', href:'gomi_rescue_stage3.html'},
+];
+const RANK_COLOR = {S:'#ffb300', A:'#2a72d4', B:'#4caf50', C:'#ff9800'};
+
+function render(){
+  const p = loadProgress();
+  const clearedCount = STAGES.filter(s => p['stage'+s.num] && p['stage'+s.num].rank4).length;
+  const pct = Math.round(clearedCount/3*100);
+  document.getElementById('city-pct').textContent = pct+'%';
+  document.getElementById('city-bar-fill').style.width = pct+'%';
+  const scenes = ['🏚️💨🗑️🗑️🗑️','🏘️🗑️🗑️🌥️','🏢🌤️🗑️🌳','🏙️✨🌳🌳✨'];
+  document.getElementById('city-scene').textContent = scenes[clearedCount];
+
+  const storyEl = document.getElementById('story-text');
+  if(clearedCount===0) storyEl.innerHTML = STORY_DEFAULT;
+  else if(clearedCount<3) storyEl.innerHTML = '街のゴミは少しずつ片づいてきた。でも、まだ危険は残っている……<br><b>次のステージに向かおう！</b>';
+  else storyEl.innerHTML = '3つのミッションを乗り越え、街はすっかり見違えるほどキレイになった。<br><b>最後に、キミの活躍の結果を確認しよう！</b>';
+
+  const wrap = document.getElementById('stages');
+  wrap.innerHTML='';
+  STAGES.forEach((s,i)=>{
+    const prev = i===0 ? true : !!(p['stage'+STAGES[i-1].num] && p['stage'+STAGES[i-1].num].rank4);
+    const done = p['stage'+s.num] && p['stage'+s.num].rank4;
+    const a = document.createElement('a');
+    a.className = 'stage-card '+s.cls+(prev?'':' locked');
+    a.href = prev ? s.href : '#';
+    let statusHtml;
+    if(!prev) statusHtml = '<div class="sc-status locked-lb">🔒 前のステージをクリアしてね</div>';
+    else if(done) statusHtml = '<div class="sc-status clear">✅ クリア済み</div>';
+    else statusHtml = '<div class="sc-status" style="color:#c2740a;">▶ 挑戦できます！</div>';
+    a.innerHTML = `<div class="sc-icon">${s.icon}</div>
+      <div class="sc-body"><div class="sc-title">${s.title}｜${s.desc}</div>${statusHtml}</div>
+      ${done ? `<div class="sc-rank" style="color:${RANK_COLOR[p['stage'+s.num].rank4]}">${p['stage'+s.num].rank4}</div>` : (prev ? '' : '<span class="lock-emoji">🔒</span>')}`;
+    wrap.appendChild(a);
+  });
+
+  const resultCard = document.getElementById('result-card');
+  const resultDesc = document.getElementById('result-desc');
+  const resultLock = document.getElementById('result-lock');
+  if(clearedCount>=3){
+    resultCard.classList.remove('locked');
+    resultDesc.textContent = 'キミの称号を確認して、ランキングに登録しよう！';
+    resultLock.textContent = '▶';
+  } else {
+    resultDesc.textContent = `あと${3-clearedCount}ステージクリアで解放されます`;
+    resultLock.textContent = '🔒';
+  }
+}
+render();
+
+document.getElementById('btn-reset').addEventListener('click', ()=>{
+  if(confirm('進行状況をリセットします。よろしいですか？')){
+    try{ localStorage.removeItem('grq_progress'); }catch(e){}
+    render();
+  }
+});
+</script>
+</body>
+</html>
