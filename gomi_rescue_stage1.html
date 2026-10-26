@@ -115,7 +115,12 @@ body{background:linear-gradient(180deg,var(--sky),var(--skydeep));display:flex;a
   box-shadow:0 4px 0 rgba(0,0,0,.15);transition:transform .08s,box-shadow .08s;position:relative;overflow:hidden;}
 .bin-btn::after{content:'';position:absolute;top:0;left:0;right:0;height:45%;background:rgba(255,255,255,.25);}
 .bin-btn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.15);}
-.bin-btn .bic{font-size:22px;position:relative;z-index:1;}
+.bin-btn .bic{font-size:22px;position:relative;z-index:1;display:flex;}
+/* 分別アイコン画像：色つきボタンの上でも見えるよう、白い丸の台座に載せる */
+.bin-img{width:30px;height:30px;object-fit:contain;background:#fff;border-radius:50%;padding:3px;display:block;box-shadow:0 1px 3px rgba(0,0,0,.25);}
+.bic .bin-img{width:27px;height:27px;padding:2.5px;}
+.direction-hint{display:flex;align-items:center;gap:2px;}
+.bin-img-s{width:22px;height:22px;object-fit:contain;display:block;}
 .bin-btn .bnm{font-size:11px;position:relative;z-index:1;text-shadow:0 1px 2px rgba(0,0,0,.2);}
 .bin-btn .bkey{position:absolute;top:3px;left:6px;font-size:9px;opacity:.6;z-index:1;}
 #bin-fire{background:linear-gradient(160deg,#ff8a6b,var(--red));}
@@ -279,27 +284,43 @@ body{background:linear-gradient(180deg,var(--sky),var(--skydeep));display:flex;a
 }
 .bgm-btn:active{transform:scale(.9);}
 .bgm-btn.muted{opacity:.55;}
+.gi{width:1.15em;height:1.15em;vertical-align:-.22em;display:inline-block;flex-shrink:0;}
+.home-link .gi,.bgm-btn .gi,.refresh-btn .gi{width:24px;height:24px;vertical-align:0;}
+.truck-emoji img{width:clamp(96px,28vw,150px);height:auto;display:block;margin:0 auto;}
+.cutin-emoji{display:flex;align-items:center;justify-content:center;gap:6px;}
+.cutin-emoji .ci-img{height:70px;width:auto;}
+.cutin-emoji .gi{width:42px;height:42px;vertical-align:0;}
+.explosion-truck .ci-img{width:clamp(110px,32vw,170px);height:auto;display:block;}
+.hud-chip .l .gi{width:10px;height:10px;vertical-align:-1.5px;}
+.cutin-stat .gi{width:1.2em;height:1.2em;vertical-align:-.25em;}
+.exp-debris .gi{width:1em;height:1em;vertical-align:0;}
+#judge-flash .gi{width:1em;height:1em;vertical-align:-.12em;}
+.go-nav-row .gi{width:1.1em;height:1.1em;}
+@media(max-width:520px){.g-wrap{padding-top:calc(max(env(safe-area-inset-top),10px) + 46px);}}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="#3b2a1a" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><rect x="5.5" y="11" width="13" height="9.5" rx="1" fill="#fff3d6"/><path d="M3 11.8 12 3.5l9 8.3z" fill="#e8554e"/><rect x="10" y="14.5" width="4" height="6" rx=".6" fill="#a3703a"/></symbol><symbol id="i-sound-on" viewBox="0 0 24 24" fill="none" stroke="#3b2a1a" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M3.5 9.5H7.5L12.5 5.5v13L7.5 14.5H3.5z" fill="#5aa0f0"/><path d="M15.5 9c1.5 1.7 1.5 4.3 0 6" fill="none"/><path d="M18.2 6.3c3 3.2 3 8.2 0 11.4" fill="none"/></symbol><symbol id="i-sound-off" viewBox="0 0 24 24" fill="none" stroke="#3b2a1a" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M3.5 9.5H7.5L12.5 5.5v13L7.5 14.5H3.5z" fill="#aab4c0"/><path d="M15.8 9.3l5 5.4M20.8 9.3l-5 5.4" fill="none" stroke="#e8554e" stroke-width="2"/></symbol><symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="#3b2a1a" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="#8a95a3" stroke-width="2"/><rect x="5" y="11" width="14" height="10" rx="2.2" fill="#f2b630"/><circle cx="12" cy="15.6" r="1.5" fill="#3b2a1a" stroke="none"/><path d="M12 16.5v2" fill="none"/></symbol><symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="#3b2a1a" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M12 20.5C5 15.6 3 11.6 3 8.6A4.6 4.6 0 0 1 12 7a4.6 4.6 0 0 1 9 1.6c0 3-2 7-9 11.9z" fill="#ee5a6f"/></symbol><symbol id="i-timer" viewBox="0 0 24 24" fill="none" stroke="#3b2a1a" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><rect x="9.6" y="2.2" width="4.8" height="2.6" rx=".8" fill="#8a95a3"/><circle cx="12" cy="13.6" r="7.6" fill="#fff"/><path d="M12 13.6V9" fill="none" stroke-width="1.8"/><path d="M12 13.6l3 1.8" fill="none"/></symbol><symbol id="i-ok" viewBox="0 0 24 24" fill="none" stroke="#3b2a1a" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="3.2"/></symbol><symbol id="i-ng" viewBox="0 0 24 24" fill="none" stroke="#3b2a1a" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M5.5 5.5l13 13M18.5 5.5l-13 13" fill="none" stroke="currentColor" stroke-width="3.4"/></symbol><symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="#3b2a1a" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><polygon points="12.00,2.40 14.70,9.08 21.89,9.59 16.37,14.22 18.11,21.21 12.00,17.40 5.89,21.21 7.63,14.22 2.11,9.59 9.30,9.08" fill="#ffd23f"/></symbol><symbol id="i-warning" viewBox="0 0 24 24" fill="none" stroke="#3b2a1a" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M12 3.4 22 20.6H2z" fill="#ffcc33"/><path d="M12 9.6v5" fill="none" stroke-width="1.8"/><circle cx="12" cy="17.6" r=".5" fill="#3b2a1a"/></symbol><symbol id="i-burst" viewBox="0 0 24 24" fill="none" stroke="#3b2a1a" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><polygon points="12.00,1.00 13.85,6.29 18.47,3.10 16.85,8.47 22.46,8.60 18.00,12.00 22.46,15.40 16.85,15.53 18.47,20.90 13.85,17.71 12.00,23.00 10.15,17.71 5.53,20.90 7.15,15.53 1.54,15.40 6.00,12.00 1.54,8.60 7.15,8.47 5.53,3.10 10.15,6.29" fill="#ff8a3d"/><polygon points="12.00,5.80 12.99,8.96 15.64,6.98 14.59,10.12 17.90,10.08 15.20,12.00 17.90,13.92 14.59,13.88 15.64,17.02 12.99,15.04 12.00,18.20 11.01,15.04 8.36,17.02 9.41,13.88 6.10,13.92 8.80,12.00 6.10,10.08 9.41,10.12 8.36,6.98 11.01,8.96" fill="#ffd23f" stroke="none"/></symbol><symbol id="i-gear" viewBox="0 0 24 24" fill="none" stroke="#3b2a1a" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><rect x="10.1" y="1.8" width="3.8" height="5" rx=".7" fill="#9aa5b1" transform="rotate(0 12 12)"/><rect x="10.1" y="1.8" width="3.8" height="5" rx=".7" fill="#9aa5b1" transform="rotate(45 12 12)"/><rect x="10.1" y="1.8" width="3.8" height="5" rx=".7" fill="#9aa5b1" transform="rotate(90 12 12)"/><rect x="10.1" y="1.8" width="3.8" height="5" rx=".7" fill="#9aa5b1" transform="rotate(135 12 12)"/><rect x="10.1" y="1.8" width="3.8" height="5" rx=".7" fill="#9aa5b1" transform="rotate(180 12 12)"/><rect x="10.1" y="1.8" width="3.8" height="5" rx=".7" fill="#9aa5b1" transform="rotate(225 12 12)"/><rect x="10.1" y="1.8" width="3.8" height="5" rx=".7" fill="#9aa5b1" transform="rotate(270 12 12)"/><rect x="10.1" y="1.8" width="3.8" height="5" rx=".7" fill="#9aa5b1" transform="rotate(315 12 12)"/><circle cx="12" cy="12" r="7" fill="#9aa5b1"/><circle cx="12" cy="12" r="2.6" fill="#fff"/></symbol><symbol id="i-tire" viewBox="0 0 24 24" fill="none" stroke="#3b2a1a" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9.2" fill="#444"/><circle cx="12" cy="12" r="4.6" fill="#c8ced6"/><circle cx="12" cy="12" r="1.3" fill="#3b2a1a" stroke="none"/></symbol><symbol id="i-puff" viewBox="0 0 24 24" fill="none" stroke="#3b2a1a" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><circle cx="8" cy="13.5" r="4.2" fill="#fff" stroke="#9aa5b1"/><circle cx="13.2" cy="10.5" r="5.2" fill="#fff" stroke="#9aa5b1"/><circle cx="17.2" cy="14.4" r="4" fill="#fff" stroke="#9aa5b1"/><circle cx="8" cy="13.5" r="3.6" fill="#fff" stroke="none"/><circle cx="13.2" cy="10.5" r="4.6" fill="#fff" stroke="none"/><circle cx="17.2" cy="14.4" r="3.4" fill="#fff" stroke="none"/><rect x="8" y="14" width="9.4" height="4.2" fill="#fff" stroke="none"/></symbol><symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="#3b2a1a" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M12 21.4s-6.8-6.4-6.8-11.4a6.8 6.8 0 0 1 13.6 0c0 5-6.8 11.4-6.8 11.4z" fill="#e8554e"/><circle cx="12" cy="10" r="2.5" fill="#fff"/></symbol><symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="#3b2a1a" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M19.6 12a7.6 7.6 0 1 1-2.4-5.5" fill="none" stroke="#3b6fd8" stroke-width="2.4"/><path d="M20.8 3.6v5.6h-5.6z" fill="#3b6fd8" stroke="#3b6fd8" stroke-width="1"/></symbol><symbol id="i-pencil" viewBox="0 0 24 24" fill="none" stroke="#3b2a1a" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><path d="M4 20l1.3-4.8L16.2 4.3a2.1 2.1 0 0 1 3 0l.5.5a2.1 2.1 0 0 1 0 3L8.8 18.7z" fill="#f5c542"/><path d="M15 5.5l3.5 3.5" fill="none"/><path d="M4 20l1.3-4.8 3.5 3.5z" fill="#f3d9a8"/></symbol><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="#3b2a1a" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round"><circle cx="12" cy="12" r="9.2" fill="#2ecc71"/><path d="M7.4 12.4l3.1 3.1 6.1-6.6" fill="none" stroke="#fff" stroke-width="2.5"/></symbol></defs></svg>
+<script>function gi(id,cls){return '<svg class="gi'+(cls?' '+cls:'')+'" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-'+id+'"/></svg>';}var GI_FIRE='<img class="gi" src="assets/bin-burn.png?v=20261025" alt="">',GI_TRUCK='<img class="ci-img" src="assets/truck.png?v=20261025" alt="">';</script>
 
-<button id="bgm-toggle" class="bgm-btn" aria-label="BGM on/off">🔊</button>
-<a href="gomi_rescue_start.html" class="home-link" aria-label="ホームへ" title="ホームへ">🏠</a>
+
+<button id="bgm-toggle" class="bgm-btn" aria-label="BGM on/off"><svg class="gi" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-sound-on"/></svg></button>
+<a href="gomi_rescue_start.html" class="home-link" aria-label="ホームへ" title="ホームへ"><svg class="gi" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-home"/></svg></a>
 
 <!-- ===== TITLE ===== -->
 <div id="scr-title" class="screen">
   <div class="logo-wrap">
     <div class="stage-badge">ステージ 1</div>
-    <div class="truck-emoji">🚛</div>
+    <div class="truck-emoji"><img src="assets/truck.png?v=20261025" alt="" onerror="this.replaceWith(document.createTextNode('🚛'))"></div>
     <div class="g-title">ごみレスキュー</div>
     <div class="g-sub">仕分けクイズ循環型ゲーム</div>
   </div>
   <div class="g-desc">流れてくるごみを4方向へ仕分けよう。危険品に気付いたら「ちょっと待った」で短いクイズに挑戦し、安全な行動を選ぼう！</div>
   <div class="bin-preview">
-    <div class="bin-chip"><div class="ic" style="background:var(--red);">🔥</div><div class="lb">燃やす</div></div>
-    <div class="bin-chip"><div class="ic" style="background:var(--blue);">🚫</div><div class="lb">燃やさない</div></div>
-    <div class="bin-chip"><div class="ic" style="background:var(--green);">♻️</div><div class="lb">資源</div></div>
-    <div class="bin-chip"><div class="ic" style="background:var(--pink);">✋</div><div class="lb">ちょっと待った</div></div>
+    <div class="bin-chip"><div class="ic" style="background:var(--red);"><img class="bin-img" src="assets/bin-burn.png?v=20261025" alt="" onerror="this.replaceWith(document.createTextNode('🔥'))"></div><div class="lb">燃やす</div></div>
+    <div class="bin-chip"><div class="ic" style="background:var(--blue);"><img class="bin-img" src="assets/bin-noburn.png?v=20261025" alt="" onerror="this.replaceWith(document.createTextNode('🚫'))"></div><div class="lb">燃やさない</div></div>
+    <div class="bin-chip"><div class="ic" style="background:var(--green);"><img class="bin-img" src="assets/bin-recycle.png?v=20261025" alt="" onerror="this.replaceWith(document.createTextNode('♻️'))"></div><div class="lb">資源</div></div>
+    <div class="bin-chip"><div class="ic" style="background:var(--pink);"><img class="bin-img" src="assets/bin-wait.png?v=20261025" alt="" onerror="this.replaceWith(document.createTextNode('✋'))"></div><div class="lb">ちょっと待った</div></div>
   </div>
   <button class="btn-title" id="btn-start">▶ スタート</button>
 </div>
@@ -309,26 +330,26 @@ body{background:linear-gradient(180deg,var(--sky),var(--skydeep));display:flex;a
   <div class="g-wrap">
     <div class="hud-row">
       <div class="hud-chip" style="flex:1.6;">
-        <div class="l">❤️ 体力</div>
+        <div class="l"><svg class="gi" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-heart"/></svg> 体力</div>
         <div class="hp-bar-wrap"><div class="hp-bar-fill" id="hp-fill" style="width:100%;"></div></div>
       </div>
-      <div class="hud-chip"><div class="l">⏱ TIME</div><div class="v" id="h-timer">90</div></div>
+      <div class="hud-chip"><div class="l"><svg class="gi" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-timer"/></svg> TIME</div><div class="v" id="h-timer">90</div></div>
       <div class="hud-chip"><div class="l">SCORE</div><div class="v" id="h-score">0</div></div>
       <div class="hud-chip"><div class="l">COMBO</div><div class="v" id="h-combo" style="color:#ff8a2a;">×0</div></div>
     </div>
     <div class="hud-row" style="padding-top:0;">
       <div class="hud-chip" style="flex:1;">
-        <div class="l">🔥 ピンチレベル</div>
+        <div class="l"><img class="gi" src="assets/bin-burn.png?v=20261025" alt=""> ピンチレベル</div>
         <div class="pinch-bar-wrap"><div class="pinch-bar-fill" id="pinch-fill" style="width:0%;"></div></div>
       </div>
       <div class="hud-chip" style="flex:.6;"><div class="l">正解</div><div class="v" id="h-correct" style="font-size:14px;">0/0</div></div>
     </div>
 
     <div class="stage" id="stage">
-      <span class="direction-hint dh-up">🔥↑</span>
-      <span class="direction-hint dh-down">🚫↓</span>
-      <span class="direction-hint dh-left">✋←</span>
-      <span class="direction-hint dh-right">♻️→</span>
+      <span class="direction-hint dh-up"><img class="bin-img-s" src="assets/bin-burn.png?v=20261025" alt="" onerror="this.replaceWith(document.createTextNode('🔥'))">↑</span>
+      <span class="direction-hint dh-down"><img class="bin-img-s" src="assets/bin-noburn.png?v=20261025" alt="" onerror="this.replaceWith(document.createTextNode('🚫'))">↓</span>
+      <span class="direction-hint dh-left"><img class="bin-img-s" src="assets/bin-wait.png?v=20261025" alt="" onerror="this.replaceWith(document.createTextNode('✋'))">←</span>
+      <span class="direction-hint dh-right"><img class="bin-img-s" src="assets/bin-recycle.png?v=20261025" alt="" onerror="this.replaceWith(document.createTextNode('♻️'))">→</span>
       <div id="item-card">
         <span id="item-emoji">📰</span>
         <span class="item-name" id="item-name">新聞紙</span>
@@ -337,10 +358,10 @@ body{background:linear-gradient(180deg,var(--sky),var(--skydeep));display:flex;a
     </div>
 
     <div class="bins-grid">
-      <button class="bin-btn" id="bin-fire"><span class="bkey">↑</span><span class="bic">🔥</span><span class="bnm">燃やすごみ</span></button>
-      <button class="bin-btn" id="bin-nonburn"><span class="bkey">↓</span><span class="bic">🚫</span><span class="bnm">燃やさないごみ</span></button>
-      <button class="bin-btn" id="bin-wait"><span class="bkey">←</span><span class="bic">✋</span><span class="bnm">ちょっと待った</span></button>
-      <button class="bin-btn" id="bin-resource"><span class="bkey">→</span><span class="bic">♻️</span><span class="bnm">資源</span></button>
+      <button class="bin-btn" id="bin-fire"><span class="bkey">↑</span><span class="bic"><img class="bin-img" src="assets/bin-burn.png?v=20261025" alt="" onerror="this.replaceWith(document.createTextNode('🔥'))"></span><span class="bnm">燃やすごみ</span></button>
+      <button class="bin-btn" id="bin-nonburn"><span class="bkey">↓</span><span class="bic"><img class="bin-img" src="assets/bin-noburn.png?v=20261025" alt="" onerror="this.replaceWith(document.createTextNode('🚫'))"></span><span class="bnm">燃やさないごみ</span></button>
+      <button class="bin-btn" id="bin-wait"><span class="bkey">←</span><span class="bic"><img class="bin-img" src="assets/bin-wait.png?v=20261025" alt="" onerror="this.replaceWith(document.createTextNode('✋'))"></span><span class="bnm">ちょっと待った</span></button>
+      <button class="bin-btn" id="bin-resource"><span class="bkey">→</span><span class="bic"><img class="bin-img" src="assets/bin-recycle.png?v=20261025" alt="" onerror="this.replaceWith(document.createTextNode('♻️'))"></span><span class="bnm">資源</span></button>
     </div>
   </div>
 </div>
@@ -361,7 +382,7 @@ body{background:linear-gradient(180deg,var(--sky),var(--skydeep));display:flex;a
 <!-- ===== CUTIN OVERLAY ===== -->
 <div id="cutin-overlay">
   <div class="cutin-box">
-    <div class="cutin-emoji" id="ci-emoji">🚛</div>
+    <div class="cutin-emoji" id="ci-emoji"><img class="ci-img" src="assets/truck.png?v=20261025" alt=""></div>
     <div class="cutin-title" id="ci-title">SPECIAL SAFE!</div>
     <div class="cutin-stats" id="ci-stats"></div>
     <div class="cutin-tip" id="ci-tip"></div>
@@ -371,7 +392,7 @@ body{background:linear-gradient(180deg,var(--sky),var(--skydeep));display:flex;a
 <!-- ===== RECOVERY OVERLAY ===== -->
 <div id="recovery-overlay">
   <div class="recovery-box">
-    <div class="rec-title">🚨 緊急レスキューチャンス！</div>
+    <div class="rec-title">緊急レスキューチャンス！</div>
     <div class="rec-desc">過去に間違えた危険品から出題！<br>正解すれば体力30・タイマー+10秒で復活。</div>
     <div class="quiz-item-row">
       <span class="quiz-item-emoji" id="rec-emoji">🎧</span>
@@ -388,7 +409,7 @@ body{background:linear-gradient(180deg,var(--sky),var(--skydeep));display:flex;a
   <div class="explosion-firefield" id="exp-firefield"></div>
   <div class="explosion-core" id="exp-core"></div>
   <div class="explosion-truck-wrap">
-    <div class="explosion-truck" id="exp-truck">🚛</div>
+    <div class="explosion-truck" id="exp-truck"><img class="ci-img" src="assets/truck.png?v=20261025" alt=""></div>
     <div class="explosion-caption" id="exp-caption">ごみ収集車が爆発した…！</div>
   </div>
 </div>
@@ -396,7 +417,7 @@ body{background:linear-gradient(180deg,var(--sky),var(--skydeep));display:flex;a
 <!-- ===== GAME OVER ===== -->
 <div id="scr-go" class="screen hidden">
   <div class="go-box">
-    <div class="go-title" id="go-title">🏁 結果発表</div>
+    <div class="go-title" id="go-title">結果発表</div>
     <div class="go-rank-wrap">
       <div class="go-rank-label">ランク</div>
       <div class="go-rank" id="go-rank">-</div>
@@ -409,7 +430,7 @@ body{background:linear-gradient(180deg,var(--sky),var(--skydeep));display:flex;a
     </div>
     <button class="btn-retry" id="btn-retry">もう一度挑戦！</button>
     <div class="go-nav-row">
-      <button class="btn-nav-sub" id="btn-home">🏠 ホーム</button>
+      <button class="btn-nav-sub" id="btn-home"><svg class="gi" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-home"/></svg> ホーム</button>
       <button class="btn-nav-sub btn-nav-main" id="btn-next">ステージ2へ ▶</button>
     </div>
   </div>
@@ -805,7 +826,7 @@ function handleSort(binKey){
 
 function showJudge(correct){
   const el=document.getElementById('judge-flash');
-  el.textContent = correct ? '⭕ 正解！' : '❌ ちがう！';
+  el.innerHTML = correct ? gi('ok')+' 正解！' : gi('ng')+' ちがう！';
   el.style.color = correct ? '#4caf50' : '#ff5a4d';
   el.className='judge-flash '+(correct?'show-correct':'show-wrong');
   if(correct) playCorrectChime(); else playWrongBuzz();
@@ -888,7 +909,7 @@ function resolveDangerOutcome(q1c, q2c){
     timer += 3;
     combo += 1;
     overlay.className='safe';
-    document.getElementById('ci-emoji').textContent='🚛✨';
+    document.getElementById('ci-emoji').innerHTML=GI_TRUCK+gi('star');
     document.getElementById('ci-title').textContent='SPECIAL SAFE!';
     document.getElementById('ci-stats').innerHTML =
       statChip('+500','⭐')+statChip('体力+5','❤️')+statChip('タイマー+3秒','⏱')+statChip('コンボ+1','🔥');
@@ -897,7 +918,7 @@ function resolveDangerOutcome(q1c, q2c){
     // Partial safe
     score += q2c?300:200;
     overlay.className='safe';
-    document.getElementById('ci-emoji').textContent='🚛';
+    document.getElementById('ci-emoji').innerHTML=GI_TRUCK;
     document.getElementById('ci-title').textContent='安全に回収できました';
     document.getElementById('ci-stats').innerHTML = statChip('+'+(q2c?300:200),'⭐');
     document.getElementById('ci-tip').textContent=currentItem.tip;
@@ -909,7 +930,7 @@ function resolveDangerOutcome(q1c, q2c){
     pinch = Math.min(100, pinch+25);
     missedDangerItems.push(currentItem);
     overlay.className='pinch';
-    document.getElementById('ci-emoji').textContent='🔥🚒';
+    document.getElementById('ci-emoji').innerHTML=GI_FIRE.replace('class="gi"','class="gi" style="width:42px;height:42px"')+GI_TRUCK;
     document.getElementById('ci-title').textContent='PINCH!';
     document.getElementById('ci-stats').innerHTML =
       statChip('-25','❤️')+statChip('-3秒','⏱')+statChip('コンボリセット','💥')+statChip('ピンチ+25','⚠️');
@@ -935,7 +956,8 @@ function resolveDangerOutcome(q1c, q2c){
   }, 2200);
 }
 
-function statChip(txt,ico){ return '<div class="cutin-stat">'+ico+' '+txt+'</div>'; }
+const CHIP_ICON={'⭐':'star','❤️':'heart','⏱':'timer','💥':'burst','⚠️':'warning'};
+function statChip(txt,ico){ const ic = ico==='🔥' ? GI_FIRE : (CHIP_ICON[ico] ? gi(CHIP_ICON[ico]) : ico); return '<div class="cutin-stat">'+ic+' '+txt+'</div>'; }
 
 // ════════════════════════════════════════════════
 // TRUCK EXPLOSION (pinch level MAX)
@@ -973,7 +995,7 @@ function triggerTruckExplosion(){
   });
 
   // Debris particles
-  const debrisChars=['💥','🔥','⚙️','🛞','💨','⭐'];
+  const debrisChars=[gi('burst'),GI_FIRE,gi('gear'),gi('tire'),gi('puff'),gi('star')];
   for(let i=0;i<22;i++){
     const el=document.createElement('div');
     el.className='exp-debris';
@@ -984,7 +1006,7 @@ function triggerTruckExplosion(){
     el.style.setProperty('--ey',(Math.sin(ang)*dist)+'px');
     el.style.setProperty('--er',(Math.random()*720-360)+'deg');
     el.style.animationDelay=(Math.random()*0.15)+'s';
-    el.textContent=debrisChars[Math.floor(Math.random()*debrisChars.length)];
+    el.innerHTML=debrisChars[Math.floor(Math.random()*debrisChars.length)];
     document.body.appendChild(el);
     el.addEventListener('animationend',()=>el.remove());
   }
@@ -1009,7 +1031,7 @@ function triggerAccidentCutin(){
   updateHUD();
   const overlay=document.getElementById('cutin-overlay');
   overlay.className='pinch';
-  document.getElementById('ci-emoji').textContent='💨🚛';
+  document.getElementById('ci-emoji').innerHTML=gi('puff')+GI_TRUCK;
   document.getElementById('ci-title').textContent='事故発生！';
   document.getElementById('ci-stats').innerHTML =
     statChip('-20','❤️')+statChip('-3秒','⏱')+statChip('コンボリセット','💥')+statChip('ピンチ+25','⚠️');
@@ -1097,9 +1119,9 @@ function endGame(reason){
 
   const titleEl=document.getElementById('go-title');
   if(reason==='explosion'){
-    titleEl.textContent='💥 レスキュー失敗…';
+    titleEl.textContent='レスキュー失敗…';
   } else {
-    titleEl.textContent='🏁 結果発表';
+    titleEl.textContent='結果発表';
   }
 
   const totalCorrect = correctCount + dangerFound;
@@ -1352,7 +1374,7 @@ function toggleBGMMute(){
     bgmMasterGain.gain.setTargetAtTime(bgmMuted ? 0 : 0.22, audioCtx.currentTime, 0.05);
   }
   const btn = document.getElementById('bgm-toggle');
-  btn.textContent = bgmMuted ? '🔇' : '🔊';
+  btn.innerHTML = gi(bgmMuted ? 'sound-off' : 'sound-on');
   btn.classList.toggle('muted', bgmMuted);
   // Ensure audio context + loop are actually running once the user opts in
   if(!bgmMuted){ startBGM(); }
