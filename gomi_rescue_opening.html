@@ -72,6 +72,15 @@ video{width:100%;height:100%;object-fit:cover;display:block;background:#000;}
   transition:opacity .6s ease;}
 .fade-out.active{opacity:1;}
 </style>
+<style id="mud-accessibility-and-type">
+html,body{font-family:'BIZ UDPGothic','BIZ UDゴシック','Noto Sans JP','Yu Gothic',sans-serif}
+:where(a,button,input,select,textarea,[role="button"],[tabindex]):focus-visible{outline:3px solid #17152b!important;outline-offset:3px!important;box-shadow:0 0 0 5px #fff!important}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+:where(small,.hero-copy,.sc-desc,.sc-status,.loc-hint,.reg-note,.stat-cat,.recap-title,.rc-name .t,.rc-score small,.rank-name .t,.rank-score small,.hint,.stage-badge){font-size:max(12px,1em)!important}
+:where(.loc-section-label,.loc-block-num,.btn-reset,.rc-empty,.rank-empty,.detail-empty,.btn-home-text,.skip-btn,.sg-skip){font-size:max(12px,1em)!important}
+#scr-game .hud-chip .l{font-size:max(12px,1em)!important}#scr-game .hud-chip .v{font-size:clamp(17px,3.6vh,24px)!important}
+button,a[role="button"]{touch-action:manipulation}
+</style>
 </head>
 <body>
 <div id="stage">
