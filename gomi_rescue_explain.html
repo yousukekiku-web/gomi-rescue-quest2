@@ -4,17 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>ゴミレスキュークエスト｜解説動画</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="ゴミレスキュー解説">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{width:100%;height:100%;overflow:hidden;background:#000;
   font-family:'BIZ UDPGothic','BIZ UDゴシック','Noto Sans JP','Yu Gothic',sans-serif;}
-body{display:flex;align-items:center;justify-content:center;}
+body{display:flex;align-items:center;justify-content:center;
+  padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);
+  padding-bottom:env(safe-area-inset-bottom);}
 video{width:100%;height:100%;object-fit:contain;display:block;background:#000;}
-#fs{position:absolute;top:max(env(safe-area-inset-top),12px);right:max(env(safe-area-inset-right),12px);
-  z-index:10;background:rgba(0,0,0,.55);color:#fff;border:1.5px solid rgba(255,255,255,.6);border-radius:40px;
-  padding:8px 16px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;}
-#fs:active{transform:scale(.95);}
-:where(button):focus-visible{outline:3px solid #fff;outline-offset:3px;}
 #msg{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;
   color:#fff;font-size:14px;line-height:1.8;padding:0 24px;display:none;}
 :where(video):focus-visible{outline:3px solid #fff;outline-offset:-3px;}
@@ -22,8 +25,7 @@ video{width:100%;height:100%;object-fit:contain;display:block;background:#000;}
 </head>
 <body>
 
-<video id="v" playsinline webkit-playsinline preload="metadata" controls controlslist="nodownload"></video>
-<button id="fs" type="button">全画面で見る</button>
+<video id="v" playsinline webkit-playsinline preload="metadata" controls controlslist="nodownload nofullscreen"></video>
 <p id="msg">動画を読み込めませんでした。<br>ページを再読み込みしてください。</p>
 
 <script>
@@ -53,23 +55,7 @@ function load(){
     if(wasPlaying) v.play().catch(()=>{});
   });
 }
-/* 全画面表示中は動画の入れ替えを止め、終了後に向きを合わせ直す */
-let inFs = false;
-mq.addEventListener('change', ()=>{ if(!inFs) load(); });
-v.addEventListener('webkitbeginfullscreen', ()=>{ inFs = true; });
-v.addEventListener('webkitendfullscreen', ()=>{ inFs = false; load(); });
-
-/* 全画面ボタン（iPhoneは動画の標準全画面、その他はFullscreen API） */
-document.getElementById('fs').addEventListener('click', ()=>{
-  if(v.paused) v.play().catch(()=>{});
-  if(v.webkitEnterFullscreen){ v.webkitEnterFullscreen(); }
-  else if(v.requestFullscreen){ v.requestFullscreen().catch(()=>{}); }
-});
-document.addEventListener('fullscreenchange', ()=>{
-  inFs = !!document.fullscreenElement;
-  if(!inFs) load();
-});
-
+mq.addEventListener('change', load);
 v.addEventListener('error', ()=>{ msg.style.display = 'block'; });
 load();
 </script>
