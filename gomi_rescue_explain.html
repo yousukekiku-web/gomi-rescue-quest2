@@ -12,25 +12,52 @@
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-html,body{width:100%;height:100%;overflow:hidden;background:#000;
+html,body{width:100%;height:100%;overflow:hidden;background:#000;color:#fff;
   font-family:'BIZ UDPGothic','BIZ UDゴシック','Noto Sans JP','Yu Gothic',sans-serif;}
-body{display:flex;align-items:center;justify-content:center;
-  padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);
+body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);
   padding-bottom:env(safe-area-inset-bottom);}
-video{width:100%;height:100%;object-fit:contain;display:block;background:#000;}
+#wrap{width:100%;height:100%;display:flex;flex-direction:column;background:#000;}
+video{flex:1 1 auto;min-height:0;width:100%;object-fit:contain;display:block;background:#000;}
+
+/* パソコン用の操作バー（動画の下に配置し、字幕に重ならない） */
+#bar{flex:0 0 auto;display:none;align-items:center;gap:12px;padding:8px 14px;background:#111;}
+.pc #bar{display:flex;}
+#bar button{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.6);border-radius:40px;
+  padding:6px 14px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;}
+#bar button:hover{background:rgba(255,255,255,.15);}
+#bar button:active{transform:scale(.96);}
+#seek{flex:1 1 auto;min-width:80px;accent-color:#5edd7a;cursor:pointer;}
+#time{font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap;min-width:88px;text-align:center;}
+#fs[hidden]{display:none;}
+
 #msg{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;
-  color:#fff;font-size:14px;line-height:1.8;padding:0 24px;display:none;}
-:where(video):focus-visible{outline:3px solid #fff;outline-offset:-3px;}
+  font-size:14px;line-height:1.8;padding:0 24px;display:none;}
+:where(button,input,video):focus-visible{outline:3px solid #fff;outline-offset:2px;box-shadow:0 0 0 5px #17152b;}
 </style>
 </head>
 <body>
 
-<video id="v" playsinline webkit-playsinline preload="metadata" controls controlslist="nodownload nofullscreen"></video>
+<div id="wrap">
+  <video id="v" playsinline webkit-playsinline preload="metadata" controls controlslist="nodownload nofullscreen"></video>
+  <div id="bar">
+    <button id="play" type="button">再生</button>
+    <input id="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="再生位置">
+    <span id="time">0:00 / 0:00</span>
+    <button id="mute" type="button">消音</button>
+    <button id="fs" type="button" hidden>全画面</button>
+  </div>
+</div>
 <p id="msg">動画を読み込めませんでした。<br>ページを再読み込みしてください。</p>
 
 <script>
 const v = document.getElementById('v');
+const wrap = document.getElementById('wrap');
 const msg = document.getElementById('msg');
+const playBtn = document.getElementById('play');
+const seek = document.getElementById('seek');
+const timeEl = document.getElementById('time');
+const muteBtn = document.getElementById('mute');
+const fsBtn = document.getElementById('fs');
 
 /* 動画を差し替えたら ?v= の数字を変える（キャッシュ対策） */
 const SRC = {
@@ -38,10 +65,9 @@ const SRC = {
   landscape: 'assets/yoko_move_small.mp4?v=20261105'
 };
 
+/* ===== 画面の向きに合わせて動画を切り替え（再生位置と再生状態は引き継ぐ） ===== */
 const mq = window.matchMedia('(orientation: portrait)');
 let current = null;
-
-/* 画面の向きに合わせて動画を切り替え。再生位置と再生状態は引き継ぐ */
 function load(){
   const key = mq.matches ? 'portrait' : 'landscape';
   if(key === current) return;
@@ -58,6 +84,62 @@ function load(){
 mq.addEventListener('change', load);
 v.addEventListener('error', ()=>{ msg.style.display = 'block'; });
 load();
+
+/* ===== パソコン（マウス操作）の場合だけ、独自の操作バーを使う ===== */
+const pcMq = window.matchMedia('(hover: hover) and (pointer: fine)');
+function applyMode(){
+  const pc = pcMq.matches;
+  document.body.classList.toggle('pc', pc);
+  v.controls = !pc;
+}
+pcMq.addEventListener('change', applyMode);
+applyMode();
+
+function fmt(s){
+  if(!isFinite(s)) s = 0;
+  const m = Math.floor(s/60), r = Math.floor(s%60);
+  return m + ':' + String(r).padStart(2,'0');
+}
+function togglePlay(){ v.paused ? v.play().catch(()=>{}) : v.pause(); }
+
+playBtn.addEventListener('click', togglePlay);
+v.addEventListener('click', ()=>{ if(document.body.classList.contains('pc')) togglePlay(); });
+v.addEventListener('play',  ()=>{ playBtn.textContent = '一時停止'; });
+v.addEventListener('pause', ()=>{ playBtn.textContent = '再生'; });
+v.addEventListener('ended', ()=>{ playBtn.textContent = '再生'; });
+
+function updateTime(){
+  seek.value = v.duration ? Math.round(v.currentTime / v.duration * 1000) : 0;
+  timeEl.textContent = fmt(v.currentTime) + ' / ' + fmt(v.duration);
+}
+v.addEventListener('timeupdate', updateTime);
+v.addEventListener('loadedmetadata', updateTime);
+seek.addEventListener('input', ()=>{
+  if(v.duration) v.currentTime = seek.value / 1000 * v.duration;
+});
+
+muteBtn.addEventListener('click', ()=>{
+  v.muted = !v.muted;
+  muteBtn.textContent = v.muted ? '音を出す' : '消音';
+});
+
+/* 全画面（操作バーごと全画面にする。対応していない端末ではボタンを出さない） */
+if(document.fullscreenEnabled){ fsBtn.hidden = false; }
+fsBtn.addEventListener('click', ()=>{
+  if(document.fullscreenElement){ document.exitFullscreen(); }
+  else { wrap.requestFullscreen().catch(()=>{}); }
+});
+document.addEventListener('fullscreenchange', ()=>{
+  fsBtn.textContent = document.fullscreenElement ? '全画面を終了' : '全画面';
+});
+
+/* キーボード：スペースで再生／停止、Fで全画面（パソコンのみ） */
+document.addEventListener('keydown', (e)=>{
+  if(!document.body.classList.contains('pc')) return;
+  if(e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') return;
+  if(e.code === 'Space'){ e.preventDefault(); togglePlay(); }
+  if(e.key === 'f' || e.key === 'F'){ if(!fsBtn.hidden) fsBtn.click(); }
+});
 </script>
 </body>
 </html>
