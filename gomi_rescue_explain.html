@@ -29,6 +29,10 @@ video{flex:1 1 auto;min-height:0;width:100%;object-fit:contain;display:block;bac
 #seek{flex:1 1 auto;min-width:80px;accent-color:#5edd7a;cursor:pointer;}
 #time{font-size:13px;font-variant-numeric:tabular-nums;white-space:nowrap;min-width:88px;text-align:center;}
 #fs[hidden]{display:none;}
+#vol{flex:0 0 auto;width:90px;accent-color:#5edd7a;cursor:pointer;}
+/* 再生中にしばらく操作がなければ、操作バーを隠して動画を最大表示 */
+.pc #bar.hide{display:none;}
+.pc.idle,.pc.idle video{cursor:none;}
 
 #msg{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;
   font-size:14px;line-height:1.8;padding:0 24px;display:none;}
@@ -44,6 +48,8 @@ video{flex:1 1 auto;min-height:0;width:100%;object-fit:contain;display:block;bac
     <input id="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="再生位置">
     <span id="time">0:00 / 0:00</span>
     <button id="mute" type="button">消音</button>
+    <input id="vol" type="range" min="0" max="100" value="100" step="1" aria-label="音量">
+
     <button id="fs" type="button" hidden>全画面</button>
   </div>
 </div>
@@ -118,10 +124,45 @@ seek.addEventListener('input', ()=>{
   if(v.duration) v.currentTime = seek.value / 1000 * v.duration;
 });
 
-muteBtn.addEventListener('click', ()=>{
-  v.muted = !v.muted;
-  muteBtn.textContent = v.muted ? '音を出す' : '消音';
+/* 音量スライダー・消音 */
+const volEl = document.getElementById('vol');
+volEl.addEventListener('input', ()=>{
+  v.volume = volEl.value / 100;
+  v.muted = (v.volume === 0);
 });
+muteBtn.addEventListener('click', ()=>{
+  if(v.muted || v.volume === 0){
+    v.muted = false;
+    if(v.volume === 0) v.volume = 0.5;
+  } else {
+    v.muted = true;
+  }
+});
+v.addEventListener('volumechange', ()=>{
+  const silent = v.muted || v.volume === 0;
+  volEl.value = silent ? 0 : Math.round(v.volume * 100);
+  muteBtn.textContent = silent ? '音を出す' : '消音';
+});
+
+/* 再生中、3秒操作がなければ操作バーを隠す。マウス移動・キー操作・一時停止で再表示 */
+const bar = document.getElementById('bar');
+let idleTimer = null;
+function showBar(){
+  bar.classList.remove('hide');
+  document.body.classList.remove('idle');
+  clearTimeout(idleTimer);
+  if(!v.paused && !v.ended){
+    idleTimer = setTimeout(()=>{
+      if(bar.matches(':hover') || bar.querySelector(':focus-visible')) { showBar(); return; }
+      bar.classList.add('hide');
+      document.body.classList.add('idle');
+    }, 3000);
+  }
+}
+['mousemove','mousedown','keydown','touchstart'].forEach(ev=>document.addEventListener(ev, showBar));
+v.addEventListener('play', showBar);
+v.addEventListener('pause', showBar);
+v.addEventListener('ended', showBar);
 
 /* 全画面（操作バーごと全画面にする。対応していない端末ではボタンを出さない） */
 if(document.fullscreenEnabled){ fsBtn.hidden = false; }
@@ -139,6 +180,10 @@ document.addEventListener('keydown', (e)=>{
   if(e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') return;
   if(e.code === 'Space'){ e.preventDefault(); togglePlay(); }
   if(e.key === 'f' || e.key === 'F'){ if(!fsBtn.hidden) fsBtn.click(); }
+  if(e.key === 'ArrowUp'){ e.preventDefault(); v.muted = false; v.volume = Math.min(1, v.volume + 0.05); }
+  if(e.key === 'ArrowDown'){ e.preventDefault(); v.volume = Math.max(0, v.volume - 0.05); }
+  if(e.key === 'ArrowRight'){ e.preventDefault(); v.currentTime = Math.min(v.duration||0, v.currentTime + 5); }
+  if(e.key === 'ArrowLeft'){ e.preventDefault(); v.currentTime = Math.max(0, v.currentTime - 5); }
 });
 </script>
 </body>
