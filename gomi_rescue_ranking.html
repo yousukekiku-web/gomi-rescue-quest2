@@ -66,8 +66,8 @@ body{background:linear-gradient(160deg,#173a34,#0f8f83);display:flex;align-items
 
 /* ===== register ===== */
 .register{margin:16px 18px;background:#f0faf3;border:2px dashed #a8e6b8;border-radius:16px;padding:16px;text-align:center;}
-.register h3{font-family:'Fredoka One',sans-serif;font-size:16px;color:#1f9c53;margin-bottom:8px;}
-.register p{font-size:11px;font-weight:700;color:#4a7a5a;margin-bottom:12px;line-height:1.6;}
+.register h3{font-family:'Fredoka One',sans-serif;font-size:16px;color:#0b6b5f;margin-bottom:8px;}
+.register p{font-size:11px;font-weight:700;color:#1f4d36;margin-bottom:12px;line-height:1.6;}
 .register input{width:100%;padding:11px 14px;border-radius:12px;border:2px solid #b8e8c4;font-size:14px;
   font-weight:700;margin-bottom:10px;text-align:center;background:#fff;color:var(--ink);}
 .register input:focus{outline:none;border-color:var(--green);}
@@ -86,20 +86,21 @@ body{background:linear-gradient(160deg,#173a34,#0f8f83);display:flex;align-items
   font-weight:700;background:#fff;color:var(--ink);}
 .loc-row input{flex:1;margin-bottom:0;}
 .loc-row select:focus{outline:none;border-color:var(--green);}
-.loc-section-label{font-size:11px;font-weight:900;color:#4a7a5a;text-align:left;margin-bottom:8px;line-height:1.6;}
+.loc-section-label{font-size:11px;font-weight:900;color:#1f4d36;text-align:left;margin-bottom:8px;line-height:1.6;}
 .loc-block{background:#fff;border:2px solid #cdeed7;border-radius:14px;padding:12px;margin-bottom:10px;text-align:left;}
-.loc-block-num{display:inline-block;font-family:'Fredoka One',sans-serif;font-size:11px;color:#1f9c53;
+.loc-block-num{display:inline-block;font-family:'Fredoka One',sans-serif;font-weight:900;font-size:11px;color:#0a5a2e;
   background:#dff5e1;border-radius:8px;padding:2px 9px;margin-bottom:8px;}
 .loc-block .loc-row{margin-bottom:8px;}
 .loc-block input.place-input{margin-bottom:0;text-align:left;font-size:12.5px;}
-.loc-hint{font-size:9.5px;color:#6a9a7a;margin:-2px 0 12px;line-height:1.6;text-align:left;}
+.loc-hint{font-size:9.5px;font-weight:700;color:#2f5f45;margin:-2px 0 12px;line-height:1.6;text-align:left;}
 .btn-register{width:100%;padding:17px 12px;border:3px solid #fff;border-radius:40px;background:#0b6b5f;
   color:#fff;font-family:'Noto Sans JP','BIZ UDPGothic',sans-serif;font-weight:900;font-size:19px;letter-spacing:.06em;
   cursor:pointer;box-shadow:0 0 0 2px #063d36,0 6px 0 2px #063d36;}
 .btn-register:active{transform:translateY(4px);box-shadow:0 0 0 2px #063d36,0 2px 0 2px #063d36;}
 /* 登録中は薄くせず、濃いグレー＋白文字のまま読めるようにする */
 .btn-register:disabled{opacity:1;background:#55606b;box-shadow:0 0 0 2px #2f3740,0 6px 0 2px #2f3740;cursor:default;}
-.reg-note{font-size:9.5px;color:#6a9a7a;margin-top:8px;line-height:1.6;}
+.register input::placeholder{color:#55665d;opacity:1;font-weight:700;}
+.reg-note{font-size:9.5px;font-weight:700;color:#2f5f45;margin-top:8px;line-height:1.6;}
 
 /* ===== ranking ===== */
 .ranking{margin:18px 18px 8px;}
@@ -109,19 +110,19 @@ body{background:linear-gradient(160deg,#173a34,#0f8f83);display:flex;align-items
   box-shadow:0 2px 8px rgba(0,0,0,.08);}
 .rank-item.me{background:#eafcf0;border:2px solid var(--green);}
 .rank-top{display:flex;align-items:center;gap:10px;}
-.rank-pos{font-family:'Fredoka One',sans-serif;font-size:15px;width:26px;text-align:center;color:#9a86b8;flex-shrink:0;}
+.rank-pos{font-family:'Fredoka One',sans-serif;font-size:15px;width:26px;text-align:center;color:#6a4fa0;flex-shrink:0;}
 .rank-pos.medal{font-size:19px;}
 .rank-char-icon{width:34px;height:42px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px;
   border-radius:8px;overflow:hidden;}
 .rank-char-icon img{width:100%;height:100%;object-fit:cover;display:block;}
 .rank-name{flex:1;min-width:0;}
 .rank-name .n{font-size:12.5px;font-weight:900;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.rank-name .t{font-size:9.5px;font-weight:700;color:#8a86a8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.rank-score{font-family:'Fredoka One',sans-serif;font-size:11px;color:#3ab06a;letter-spacing:.05em;flex-shrink:0;}
+.rank-name .t{font-size:9.5px;font-weight:700;color:#5a5570;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rank-score{font-family:'Fredoka One',sans-serif;font-size:11px;font-weight:900;color:#1b7a45;letter-spacing:.05em;flex-shrink:0;}
 .rank-chars{display:flex;gap:5px;flex-wrap:wrap;padding-left:44px;}
 .rank-char-badge{display:flex;align-items:center;gap:3px;background:#e2f9ec;border-radius:8px;padding:3px 7px;
-  font-size:9.5px;font-weight:700;color:#1f9c53;}
-.rank-empty{text-align:center;font-size:11.5px;color:#a89ac0;font-weight:700;padding:16px;}
+  font-size:9.5px;font-weight:700;color:#14693a;}
+.rank-empty{text-align:center;font-size:11.5px;color:#6a5a88;font-weight:700;padding:16px;}
 
 .btn-view-board{display:block;text-align:center;background:#ffc61a;border:3px solid #fff;
   color:#2b1a00;text-decoration:none;font-family:'Noto Sans JP','BIZ UDPGothic',sans-serif;font-weight:900;font-size:15.5px;line-height:1.5;
