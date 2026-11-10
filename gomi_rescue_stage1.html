@@ -394,10 +394,11 @@ button,a[role="button"]{touch-action:manipulation}
 .go-stat{background:#e3edff;border:2px solid #2f6fcf}
 #item-card .item-name{color:#17202c;font-size:clamp(13px,3.4vw,16px)}
 .explosion-caption{font-family:'BIZ UDPGothic','BIZ UDゴシック','Noto Sans JP','Yu Gothic',sans-serif;font-weight:700}
-/* カットイン：白文字が読める濃い背景に */
-#cutin-overlay.safe{background:linear-gradient(160deg,#1a8a52,#146f43)}
-#cutin-overlay.pinch{background:linear-gradient(160deg,#c9473c,#a8332a)}
-.cutin-stat,.cutin-tip{background:rgba(0,0,0,.3);color:#fff}
+/* カットイン（事故発生／セーフ）：背景は元の爽やかな色に戻し、文字は影と半透明の濃い帯で読みやすく */
+#cutin-overlay.safe{background:linear-gradient(160deg,#2ecc71,#1a9a55)}
+#cutin-overlay.pinch{background:linear-gradient(160deg,#ff6b4d,#c23020)}
+.cutin-title{text-shadow:0 2px 0 rgba(0,0,0,.35),0 0 10px rgba(0,0,0,.25)}
+.cutin-stat,.cutin-tip{background:rgba(0,0,0,.36);color:#fff}
 .cutin-stat{font-size:14px}.cutin-tip{font-size:13px}
 
 /* ===== ちょっと待ったクイズ：問題文に目が行くよう、上部の罫を濃く・太く／選択肢の枠はやわらかく ===== */
