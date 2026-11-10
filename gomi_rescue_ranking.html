@@ -30,8 +30,8 @@ body{background:linear-gradient(160deg,#173a34,#0f8f83);display:flex;align-items
 @media(min-width:521px){#app{border-radius:28px;height:92vh;}}
 
 .home-link{position:fixed;top:max(env(safe-area-inset-top),10px);left:12px;z-index:999;
-  width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.85);border:none;
-  font-size:17px;box-shadow:0 3px 10px rgba(0,0,0,.15);cursor:pointer;display:flex;
+  width:44px;height:44px;border-radius:50%;background:#fff;border:none;
+  font-size:17px;box-shadow:0 0 0 2px #17302c,0 3px 10px rgba(0,0,0,.25);cursor:pointer;display:flex;
   align-items:center;justify-content:center;text-decoration:none;color:inherit;}
 .home-link:active{transform:scale(.9);}
 
@@ -40,9 +40,9 @@ body{background:linear-gradient(160deg,#173a34,#0f8f83);display:flex;align-items
 .notice .em{font-size:52px;margin-bottom:10px;}
 .notice h2{font-family:'Fredoka One',sans-serif;font-size:20px;color:var(--purpled);margin-bottom:10px;}
 .notice p{font-size:12.5px;font-weight:700;color:#5a5570;line-height:1.8;margin-bottom:20px;}
-.notice a{display:inline-block;background:linear-gradient(135deg,#8a64dd,var(--purple));color:#fff;
-  text-decoration:none;font-family:'Fredoka One',sans-serif;font-size:15px;padding:12px 30px;border-radius:40px;
-  box-shadow:0 5px 0 var(--purpled);}
+.notice a{display:inline-block;background:#5b3aa8;color:#fff;
+  text-decoration:none;font-family:'Noto Sans JP','BIZ UDPGothic',sans-serif;font-weight:900;font-size:16px;padding:14px 32px;border-radius:40px;
+  box-shadow:0 0 0 2px #2e1a63,0 5px 0 2px #2e1a63;}
 
 /* ===== hero ===== */
 .hero{background:linear-gradient(160deg,#173a34,#0f8f83);color:#fff;text-align:center;
@@ -59,9 +59,10 @@ body{background:linear-gradient(160deg,#173a34,#0f8f83);display:flex;align-items
   border-radius:9px;overflow:hidden;}
 .me-chip .mc-icon img{width:100%;height:100%;object-fit:cover;display:block;}
 .me-chip .mc-body{flex:1;min-width:0;}
-.me-chip .mc-label{font-size:9px;font-weight:900;color:#9a86b8;letter-spacing:.05em;}
+.me-chip .mc-label{font-size:9px;font-weight:900;color:#6a4fa0;letter-spacing:.05em;}
 .me-chip .mc-title{font-size:12.5px;font-weight:900;color:var(--purpled);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.me-chip .mc-arrow{font-size:14px;color:#9a86b8;flex-shrink:0;}
+.me-chip .mc-arrow{font-size:12px;font-weight:900;color:#fff;background:#5b3aa8;border-radius:20px;padding:8px 12px;flex-shrink:0;
+  white-space:nowrap;box-shadow:0 0 0 2px #2e1a63,0 3px 0 2px #2e1a63;}
 
 /* ===== register ===== */
 .register{margin:16px 18px;background:#f0faf3;border:2px dashed #a8e6b8;border-radius:16px;padding:16px;text-align:center;}
@@ -122,17 +123,21 @@ body{background:linear-gradient(160deg,#173a34,#0f8f83);display:flex;align-items
   font-size:9.5px;font-weight:700;color:#1f9c53;}
 .rank-empty{text-align:center;font-size:11.5px;color:#a89ac0;font-weight:700;padding:16px;}
 
-.btn-view-board{display:block;text-align:center;background:linear-gradient(135deg,#ffcf4d,var(--gold));
-  color:#5a3a00;text-decoration:none;font-family:'Fredoka One',sans-serif;font-size:14.5px;line-height:1.5;
-  padding:15px 16px;border-radius:18px;box-shadow:0 5px 0 #c98700;}
-.btn-view-board:active{transform:translateY(3px);box-shadow:0 2px 0 #c98700;}
-.btn-view-board small{display:block;font-family:'BIZ UDPGothic','Noto Sans JP',sans-serif;font-size:10.5px;
-  font-weight:700;margin-top:4px;opacity:.85;}
+.btn-view-board{display:block;text-align:center;background:#ffc61a;border:3px solid #fff;
+  color:#2b1a00;text-decoration:none;font-family:'Noto Sans JP','BIZ UDPGothic',sans-serif;font-weight:900;font-size:15.5px;line-height:1.5;
+  padding:14px 14px;border-radius:18px;box-shadow:0 0 0 2px #5a3a00,0 5px 0 2px #5a3a00;}
+.btn-view-board:active{transform:translateY(3px);box-shadow:0 0 0 2px #5a3a00,0 2px 0 2px #5a3a00;}
+.btn-view-board .ti-wrap{width:30px;height:30px;margin-right:8px;vertical-align:middle;box-shadow:0 0 0 2px #5a3a00;}
+.btn-view-board .ti-wrap img{width:20px;height:20px;}
+.btn-view-board .vb-text{display:inline-block;vertical-align:middle;text-wrap:balance;}
+.btn-view-board small{display:block;font-family:'BIZ UDPGothic','Noto Sans JP',sans-serif;font-size:12px;
+  font-weight:700;margin-top:4px;opacity:1;color:#3b2600;text-wrap:balance;}
 
 .retry-row{padding:16px 18px 30px;display:flex;flex-direction:column;gap:10px;}
-.btn-retry-all{width:100%;padding:14px;border:none;border-radius:40px;background:linear-gradient(135deg,#8a64dd,var(--purple));
-  color:#fff;font-family:'Fredoka One',sans-serif;font-size:15px;cursor:pointer;box-shadow:0 5px 0 var(--purpled);}
-.btn-retry-all:active{transform:translateY(3px);box-shadow:0 2px 0 var(--purpled);}
+.btn-retry-all{width:100%;padding:15px;border:none;border-radius:40px;background:#5b3aa8;
+  color:#fff;font-family:'Noto Sans JP','BIZ UDPGothic',sans-serif;font-weight:900;font-size:16px;cursor:pointer;box-shadow:0 0 0 2px #2e1a63,0 5px 0 2px #2e1a63;}
+.btn-retry-all .gi{width:1.7em;height:1.7em;padding:3px;background:#fff;border-radius:50%;vertical-align:middle;margin-right:6px;}
+.btn-retry-all:active{transform:translateY(3px);box-shadow:0 0 0 2px #2e1a63,0 2px 0 2px #2e1a63;}
 .gi{width:1.15em;height:1.15em;vertical-align:-.22em;display:inline-block;flex-shrink:0;}
 .home-link .gi,.bgm-btn .gi,.refresh-btn .gi{width:24px;height:24px;vertical-align:0;}
 .notice .em .gi{width:52px;height:52px;vertical-align:0;}
@@ -141,7 +146,7 @@ body{background:linear-gradient(160deg,#173a34,#0f8f83);display:flex;align-items
 .ti{width:22px;height:22px;object-fit:contain;vertical-align:-5px;margin-right:4px;}
 .ti-wrap{display:inline-flex;width:26px;height:26px;border-radius:50%;background:#fff;align-items:center;justify-content:center;margin-right:6px;vertical-align:-7px;}
 .ti-wrap img{width:18px;height:18px;object-fit:contain;display:block;}
-.jbrc-link .gi,.btn-retry-all .gi{width:1.2em;height:1.2em;}
+.jbrc-link .gi{width:1.2em;height:1.2em;}
 </style>
 <style id="mud-accessibility-and-type">
 html,body{font-family:'BIZ UDPGothic','BIZ UDゴシック','Noto Sans JP','Yu Gothic',sans-serif}
@@ -392,7 +397,7 @@ async function main(){
     <div class="ranking">
       <div class="ranking-title"><img class="ti" src="assets/medal-gold.png?v=20261025" alt="" onerror="this.replaceWith(document.createTextNode('🏅'))">みんなのランキング</div>
       <a href="gomi_rescue_leaderboard.html" class="btn-view-board">
-        <span class="ti-wrap"><img src="assets/logo-battery.png?v=20261025" alt="" onerror="this.replaceWith(document.createTextNode('🔋'))"></span>リチウム電池回収スポット・ランキングを見る
+        <span class="ti-wrap"><img src="assets/logo-battery.png?v=20261025" alt="" onerror="this.replaceWith(document.createTextNode('🔋'))"></span><span class="vb-text">リチウム電池回収スポット・<wbr>ランキングを見る</span>
         <small>登録したキミの記録も、大きなキャラクターで確認できます</small>
       </a>
     </div>
