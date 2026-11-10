@@ -326,18 +326,18 @@ button,a[role="button"]{touch-action:manipulation}
 <style id="mud-stage1-visibility">
 /* ===== ステージ1：ボタン中心の視認性改善（ステージ3の見せ方に合わせる） ===== */
 /* ===== ボタンの共通ルール（ステージ3に統一）：濃い色ベタ＋白抜き太字＋白フチ＋濃い外周 ===== */
-.stage-badge{background:#1f4fb0!important;color:#fff!important;font-family:'BIZ UDPGothic','BIZ UDゴシック','Noto Sans JP','Yu Gothic',sans-serif;font-weight:700;box-shadow:0 0 0 2px #0f2a63}
-.btn-title,.btn-retry{border:3px solid #fff!important;background:#1f4fb0!important;color:#fff!important;font-family:'Noto Sans JP','BIZ UDPGothic',sans-serif;font-weight:900;
-  box-shadow:0 0 0 2px #0f2a63,0 6px 0 2px #0f2a63!important;animation:none!important}
+.stage-badge{background:#3563c4!important;color:#fff!important;font-family:'BIZ UDPGothic','BIZ UDゴシック','Noto Sans JP','Yu Gothic',sans-serif;font-weight:700;box-shadow:0 0 0 2px #1f3c85}
+.btn-title,.btn-retry{border:3px solid #fff!important;background:#3563c4!important;color:#fff!important;font-family:'Noto Sans JP','BIZ UDPGothic',sans-serif;font-weight:900;
+  box-shadow:0 0 0 2px #1f3c85,0 6px 0 2px #1f3c85!important;animation:none!important}
 .btn-title{font-size:clamp(19px,5.2vw,24px)}
 .btn-retry{font-size:19px}
-.btn-title:active,.btn-retry:active{transform:translateY(4px);box-shadow:0 0 0 2px #0f2a63,0 2px 0 2px #0f2a63!important}
-.btn-nav-sub{border:3px solid #1f4fb0!important;background:#fff!important;color:#123a85!important;font-family:'Noto Sans JP','BIZ UDPGothic',sans-serif;font-weight:900;font-size:14px;
-  box-shadow:0 4px 0 #0f2a63!important;padding:11px 6px}
-.btn-nav-sub:active{transform:translateY(3px);box-shadow:0 1px 0 #0f2a63!important}
-.btn-nav-main{background:#1f4fb0!important;color:#fff!important;border-color:#fff!important;box-shadow:0 0 0 2px #0f2a63,0 4px 0 2px #0f2a63!important}
-.btn-nav-main:active{box-shadow:0 0 0 2px #0f2a63,0 1px 0 2px #0f2a63!important}
-.home-link,.bgm-btn{width:44px;height:44px;background:#fff!important;box-shadow:0 0 0 2px #0f2a63,0 3px 10px rgba(0,0,0,.25)!important}
+.btn-title:active,.btn-retry:active{transform:translateY(4px);box-shadow:0 0 0 2px #1f3c85,0 2px 0 2px #1f3c85!important}
+.btn-nav-sub{border:3px solid #3563c4!important;background:#fff!important;color:#123a85!important;font-family:'Noto Sans JP','BIZ UDPGothic',sans-serif;font-weight:900;font-size:14px;
+  box-shadow:0 4px 0 #1f3c85!important;padding:11px 6px}
+.btn-nav-sub:active{transform:translateY(3px);box-shadow:0 1px 0 #1f3c85!important}
+.btn-nav-main{background:#3563c4!important;color:#fff!important;border-color:#fff!important;box-shadow:0 0 0 2px #1f3c85,0 4px 0 2px #1f3c85!important}
+.btn-nav-main:active{box-shadow:0 0 0 2px #1f3c85,0 1px 0 2px #1f3c85!important}
+.home-link,.bgm-btn{width:44px;height:44px;background:#fff!important;box-shadow:0 0 0 2px #1f3c85,0 3px 10px rgba(0,0,0,.25)!important}
 .bgm-btn.muted{opacity:1!important;background:#d9dde3!important}
 
 /* 仕分けボタン4種：色だけに頼らず、位置・矢印キー・アイコン・文字でも区別。濃い色ベタ＋白抜き太字 */
@@ -346,15 +346,15 @@ button,a[role="button"]{touch-action:manipulation}
 #scr-game .bin-btn:active{transform:translateY(3px);box-shadow:0 0 0 2px #17202c,0 1px 0 2px #17202c!important}
 #scr-game .bin-btn .bnm{font-size:clamp(15px,2.2vh,19px);font-weight:900;text-shadow:none;color:inherit}
 #scr-game .bin-btn .bkey{opacity:1;font-size:12px;font-weight:900;background:#fff;color:#17202c;border-radius:6px;padding:0 4px;line-height:1.4;top:4px;left:4px}
-#bin-fire{background:#b7410e!important}
-#bin-nonburn{background:#1f4fb0!important}
-#bin-resource{background:#0b6e4f!important}
-#scr-game #bin-wait{background:#ffd23f!important;color:#3b1200!important;border:3px solid #fff!important}
+#bin-fire{background:#bb4d16!important}
+#bin-nonburn{background:#3563c4!important}
+#bin-resource{background:#1f8060!important}
+#scr-game #bin-wait{background:#ffdc66!important;color:#3b1200!important;border:3px solid #fff!important}
 #scr-game #bin-wait .bnm{color:#3b1200}
-.bin-preview .bin-chip:nth-child(1) .ic{background:#b7410e!important}
-.bin-preview .bin-chip:nth-child(2) .ic{background:#1f4fb0!important}
-.bin-preview .bin-chip:nth-child(3) .ic{background:#0b6e4f!important}
-.bin-preview .bin-chip:nth-child(4) .ic{background:#ffd23f!important}
+.bin-preview .bin-chip:nth-child(1) .ic{background:#bb4d16!important}
+.bin-preview .bin-chip:nth-child(2) .ic{background:#3563c4!important}
+.bin-preview .bin-chip:nth-child(3) .ic{background:#1f8060!important}
+.bin-preview .bin-chip:nth-child(4) .ic{background:#ffdc66!important}
 .bin-chip{width:72px}
 .bin-preview{gap:6px}
 /* ゲーム画面の方向ヒント（🔥↑など）：薄すぎたので濃く */
@@ -362,13 +362,13 @@ button,a[role="button"]{touch-action:manipulation}
 .bin-chip .ic{box-shadow:0 0 0 2px #17202c}
 .bin-chip .lb{font-size:12px;font-weight:700;color:#17202c;font-family:'BIZ UDPGothic','BIZ UDゴシック','Noto Sans JP','Yu Gothic',sans-serif}
 /* クイズの選択肢：太い濃い枠＋正解は実線＋✔、不正解は破線＋✕（色だけに頼らない） */
-.quiz-opt{position:relative;border:3px solid #1f4fb0;background:#fff;color:#17202c;font-size:14px;font-weight:700;font-family:'BIZ UDPGothic','BIZ UDゴシック','Noto Sans JP','Yu Gothic',sans-serif;box-shadow:0 4px 0 #0f2a63}
-.quiz-opt:active{transform:translateY(3px);box-shadow:0 1px 0 #0f2a63}
-.quiz-opt.correct-flash{background:#dce8ff;border-color:#1f4fb0;box-shadow:inset 0 0 0 2px #1f4fb0,0 4px 0 #12286b}
+.quiz-opt{position:relative;border:3px solid #3563c4;background:#fff;color:#17202c;font-size:14px;font-weight:700;font-family:'BIZ UDPGothic','BIZ UDゴシック','Noto Sans JP','Yu Gothic',sans-serif;box-shadow:0 4px 0 #1f3c85}
+.quiz-opt:active{transform:translateY(3px);box-shadow:0 1px 0 #1f3c85}
+.quiz-opt.correct-flash{background:#dce8ff;border-color:#3563c4;box-shadow:inset 0 0 0 2px #3563c4,0 4px 0 #1f3c85}
 .quiz-opt.wrong-flash{background:#ffe1e6;border-color:#a3162c;border-style:dashed;box-shadow:inset 0 0 0 2px #a3162c,0 4px 0 #5a0c18}
 .quiz-opt.correct-flash::after,.quiz-opt.wrong-flash::after{content:'';position:absolute;top:-12px;right:-8px;width:30px;height:30px;border-radius:50%;box-sizing:border-box;border:3px solid #fff;
   background-repeat:no-repeat;background-position:center;background-size:68%}
-.quiz-opt.correct-flash::after{background-color:#1f4fb0;box-shadow:0 0 0 2px #12286b;
+.quiz-opt.correct-flash::after{background-color:#3563c4;box-shadow:0 0 0 2px #1f3c85;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5.5 12.5l4.2 4.2L18.5 7.5' fill='none' stroke='%23fff' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
 .quiz-opt.wrong-flash::after{background-color:#a3162c;box-shadow:0 0 0 2px #5a0c18;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6.5 6.5l11 11M17.5 6.5l-11 11' fill='none' stroke='%23fff' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E")}
@@ -380,9 +380,9 @@ button,a[role="button"]{touch-action:manipulation}
 .judge-flash.show-correct{color:#1f4fb0!important}
 .judge-flash.show-wrong{color:#a3162c!important}
 /* HUD・見出し・説明文：薄い文字を濃く、小さい文字は12px以上に */
-.hud-chip{background:#fff;border:2px solid #1f4fb0}
+.hud-chip{background:#fff;border:2px solid #3563c4}
 .hud-chip .l{color:#123a85;font-size:12px!important;letter-spacing:.02em}
-.hud-chip .v{color:#0f2a63}
+.hud-chip .v{color:#1f3c85}
 .g-title{font-family:'BIZ UDPGothic','BIZ UDゴシック','Noto Sans JP','Yu Gothic',sans-serif;font-weight:700;color:#123a85}
 .g-sub{color:#123a85;font-family:'BIZ UDPGothic','BIZ UDゴシック','Noto Sans JP','Yu Gothic',sans-serif;font-weight:700}
 .g-desc{color:#17304f;font-size:clamp(13px,3.2vw,15px)}
@@ -391,12 +391,12 @@ button,a[role="button"]{touch-action:manipulation}
 .rec-title{color:#a3162c}
 .rec-desc{color:#1f2933;font-size:13px}
 .go-rank-label,.go-stat .l{color:#123a85;font-size:12px}
-.go-stat{background:#e3edff;border:2px solid #1f4fb0}
+.go-stat{background:#e3edff;border:2px solid #3563c4}
 #item-card .item-name{color:#17202c;font-size:clamp(13px,3.4vw,16px)}
 .explosion-caption{font-family:'BIZ UDPGothic','BIZ UDゴシック','Noto Sans JP','Yu Gothic',sans-serif;font-weight:700}
 /* カットイン：白文字が読める濃い背景に */
-#cutin-overlay.safe{background:linear-gradient(160deg,#0f7a43,#0a5a32)}
-#cutin-overlay.pinch{background:linear-gradient(160deg,#b3261e,#7d150f)}
+#cutin-overlay.safe{background:linear-gradient(160deg,#187f4a,#12663b)}
+#cutin-overlay.pinch{background:linear-gradient(160deg,#c13f35,#9a2a22)}
 .cutin-stat,.cutin-tip{background:rgba(0,0,0,.3);color:#fff}
 .cutin-stat{font-size:14px}.cutin-tip{font-size:13px}
 </style>
